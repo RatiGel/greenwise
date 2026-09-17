@@ -1,0 +1,226 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-heading);
+
+  /* GREENWISE brand scale */
+  --color-forest-900: var(--forest-900);
+  --color-forest-800: var(--forest-800);
+  --color-forest-700: var(--forest-700);
+  --color-forest-600: var(--forest-600);
+  --color-forest-500: var(--forest-500);
+  --color-forest-100: var(--forest-100);
+  --color-forest-50: var(--forest-50);
+  --color-bark-700: var(--bark-700);
+  --color-bark-600: var(--bark-600);
+  --color-clay-400: var(--clay-400);
+  --color-clay-300: var(--clay-300);
+  --color-clay-200: var(--clay-200);
+  --color-sand-100: var(--sand-100);
+  --color-sand-50: var(--sand-50);
+  --color-ink-900: var(--ink-900);
+  --color-ink-600: var(--ink-600);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Brand scale — deep green + earthy neutrals */
+  --forest-900: oklch(0.248 0.049 157.2);
+  --forest-800: oklch(0.312 0.061 156.8);
+  --forest-700: oklch(0.399 0.081 156.4);
+  --forest-600: oklch(0.472 0.092 155.8);
+  --forest-500: oklch(0.564 0.098 155.2);
+  --forest-100: oklch(0.934 0.021 154.6);
+  --forest-50: oklch(0.968 0.011 154.8);
+  --bark-700: oklch(0.402 0.028 68.4);
+  --bark-600: oklch(0.487 0.031 67.8);
+  --clay-400: oklch(0.742 0.029 78.2);
+  --clay-300: oklch(0.812 0.024 79.1);
+  --clay-200: oklch(0.887 0.016 80.3);
+  --sand-100: oklch(0.964 0.008 84.2);
+  --sand-50: oklch(0.981 0.005 84.6);
+  --ink-900: oklch(0.212 0.006 152.4);
+  --ink-600: oklch(0.487 0.008 152.1);
+
+  /* Semantic mapping consumed by shadcn components */
+  --background: var(--sand-50);
+  --foreground: var(--ink-900);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--ink-900);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--ink-900);
+  --primary: var(--forest-700);
+  --primary-foreground: oklch(0.985 0.004 154);
+  --secondary: var(--forest-50);
+  --secondary-foreground: var(--forest-800);
+  --muted: var(--sand-100);
+  --muted-foreground: var(--ink-600);
+  --accent: var(--forest-100);
+  --accent-foreground: var(--forest-800);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: var(--clay-200);
+  --input: var(--clay-200);
+  --ring: var(--forest-500);
+
+  --chart-1: var(--forest-700);
+  --chart-2: var(--forest-500);
+  --chart-3: var(--bark-600);
+  --chart-4: var(--clay-400);
+  --chart-5: var(--forest-900);
+
+  --sidebar: var(--sand-50);
+  --sidebar-foreground: var(--ink-900);
+  --sidebar-primary: var(--forest-700);
+  --sidebar-primary-foreground: oklch(0.985 0.004 154);
+  --sidebar-accent: var(--forest-50);
+  --sidebar-accent-foreground: var(--forest-800);
+  --sidebar-border: var(--clay-200);
+  --sidebar-ring: var(--forest-500);
+}
+
+.dark {
+  --background: oklch(0.176 0.014 155.4);
+  --foreground: oklch(0.951 0.008 120);
+  --card: oklch(0.222 0.018 155.8);
+  --card-foreground: oklch(0.951 0.008 120);
+  --popover: oklch(0.222 0.018 155.8);
+  --popover-foreground: oklch(0.951 0.008 120);
+  --primary: oklch(0.706 0.108 155.4);
+  --primary-foreground: oklch(0.182 0.024 156);
+  --secondary: oklch(0.276 0.024 155.6);
+  --secondary-foreground: oklch(0.951 0.008 120);
+  --muted: oklch(0.276 0.024 155.6);
+  --muted-foreground: oklch(0.731 0.016 132);
+  --accent: oklch(0.312 0.034 155.8);
+  --accent-foreground: oklch(0.951 0.008 120);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.706 0.108 155.4);
+
+  --chart-1: oklch(0.706 0.108 155.4);
+  --chart-2: oklch(0.564 0.098 155.2);
+  --chart-3: oklch(0.642 0.048 68);
+  --chart-4: oklch(0.742 0.029 78.2);
+  --chart-5: oklch(0.836 0.062 154);
+
+  --sidebar: oklch(0.222 0.018 155.8);
+  --sidebar-foreground: oklch(0.951 0.008 120);
+  --sidebar-primary: oklch(0.706 0.108 155.4);
+  --sidebar-primary-foreground: oklch(0.182 0.024 156);
+  --sidebar-accent: oklch(0.312 0.034 155.8);
+  --sidebar-accent-foreground: oklch(0.951 0.008 120);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.706 0.108 155.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-balance;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  /* Georgian has no uppercase forms — never fake it with transforms. */
+  :lang(ka) {
+    text-transform: none;
+  }
+
+  ::selection {
+    background-color: var(--forest-100);
+    color: var(--forest-900);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-8;
+}
+
+@utility section-y {
+  @apply py-20 md:py-28;
+}

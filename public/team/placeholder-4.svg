@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img" aria-label="Team member portrait placeholder">
+  <rect width="400" height="500" fill="#E8E4DA"/>
+  <circle cx="200" cy="196" r="66" fill="#4A6B52" opacity="0.28"/>
+  <path d="M84 466c0-64 52-116 116-116s116 52 116 116z" fill="#4A6B52" opacity="0.28"/>
+</svg>
