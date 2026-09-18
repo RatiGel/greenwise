@@ -1,53 +1,44 @@
-import Link from "next/link"
-import { ArrowRight, MessageCircle } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { siteConfig } from "@/config/site"
+import { PillCta } from "@/components/ui/pill-cta"
 import { Reveal } from "@/components/ui/reveal"
+import { SectionBackdrop } from "@/components/ui/section-backdrop"
 import { buildWhatsAppQuickUrl } from "@/lib/whatsapp"
 
 export function CtaBand({
-  title = "დაგეგმეთ პროექტი შეფერხების გარეშე",
+  title = "დაგეგმეთ პროექტი",
+  accent = "შეფერხების გარეშე",
   description = "მოგვწერეთ პროექტის მოკლე აღწერა — გიპასუხებთ, რომელი კვლევაა სავალდებულო, რა ვადაში და რა ღირებულებით.",
 }: {
   title?: string
+  accent?: string
   description?: string
 }) {
   return (
-    <section className="section-y">
+    <section className="section-y band-dark">
       <div className="container-page">
-        <Reveal className="overflow-hidden rounded-2xl bg-forest-900 px-6 py-14 text-center sm:px-12 md:py-16">
-          <h2 className="mx-auto max-w-2xl text-3xl font-semibold text-white sm:text-4xl">
-            {title}
+        <Reveal className="relative isolate overflow-hidden rounded-[1.5rem] border border-white/12 px-7 py-14 text-center md:px-14 md:py-20">
+          <SectionBackdrop src="/photos/backdrop-cta.jpg" seed={13} className="rounded-[1.5rem]" />
+          <h2 className="heading-lg mx-auto max-w-3xl text-white">
+            {title} <span className="text-green-500">{accent}</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-clay-200">
+          <p className="mx-auto mt-6 max-w-xl leading-relaxed text-white/78">
             {description}
           </p>
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button asChild size="lg" className="group bg-white text-forest-900 hover:bg-clay-200">
-              <Link href="/contact">
-                კონსულტაციის მოთხოვნა
-                <ArrowRight
-                  aria-hidden
-                  className="size-4 transition-transform group-hover:translate-x-0.5"
-                />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white"
-            >
-              <a
-                href={buildWhatsAppQuickUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <MessageCircle aria-hidden className="size-4" />
-                WhatsApp-ით დაკავშირება
-              </a>
-            </Button>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <PillCta href="/contact">კონსულტაციის მოთხოვნა</PillCta>
+            <PillCta href={buildWhatsAppQuickUrl()} tone="onDark" external>
+              WhatsApp-ით დაკავშირება
+            </PillCta>
           </div>
+
+          <a
+            href={`tel:${siteConfig.contact.phoneHref}`}
+            className="font-display mt-9 inline-block text-lg font-semibold text-white transition-colors hover:text-green-500"
+            dir="ltr"
+          >
+            {siteConfig.contact.phone}
+          </a>
         </Reveal>
       </div>
     </section>

@@ -54,13 +54,13 @@ export default function ContactPage() {
         description="აღწერეთ პროექტი — გიპასუხებთ ერთ სამუშაო დღეში, რომელი კვლევაა სავალდებულო, რა ვადაში და რა ღირებულებით."
       />
 
-      <section className="section-y">
-        <div className="container-page grid gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+      <section className="section-y band-dark">
+        <div className="container-page grid items-start gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
           <Reveal>
-            <h2 className="text-2xl font-semibold text-forest-900">
+            <h2 className="heading-lg text-white">
               შეავსეთ ფორმა
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            <p className="prose-measure mt-3 text-white/75">
               ველების შევსების შემდეგ შეტყობინება ავტომატურად აიწყობა WhatsApp-ში.
             </p>
             <div className="mt-8">
@@ -68,29 +68,29 @@ export default function ContactPage() {
             </div>
           </Reveal>
 
-          <div className="flex flex-col gap-6">
-            <Reveal delay={100} className="rounded-xl border border-border bg-card p-6">
-              <h2 className="text-base font-semibold text-forest-900">
+          <div className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
+            <Reveal delay={100} className="rounded-2xl border border-white/12 bg-teal-700/50 p-7">
+              <h2 className="text-base font-semibold text-white">
                 პირდაპირი კონტაქტი
               </h2>
               <ul className="mt-5 flex flex-col gap-5">
                 {contactItems.map((item) => (
                   <li key={item.label} className="flex items-start gap-3.5">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-forest-50 text-forest-700">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-green-500/15 text-green-500">
                       <item.icon aria-hidden className="size-4" />
                     </span>
                     <div>
-                      <p className="text-xs text-muted-foreground">{item.label}</p>
+                      <p className="text-xs text-white/65">{item.label}</p>
                       {item.href ? (
                         <a
                           href={item.href}
                           dir={item.ltr ? "ltr" : undefined}
-                          className="mt-0.5 block text-sm font-medium text-forest-900 underline-offset-4 hover:underline"
+                          className="mt-1 block text-[0.9375rem] font-medium text-white underline-offset-4 hover:underline"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="mt-0.5 text-sm font-medium text-forest-900">
+                        <p className="mt-1 text-[0.9375rem] font-medium text-white">
                           {item.value}
                         </p>
                       )}
@@ -103,7 +103,7 @@ export default function ContactPage() {
                 href={buildWhatsAppQuickUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-7 flex items-center justify-center gap-2 rounded-lg bg-forest-700 px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-forest-800"
+                className="mt-7 flex h-12 items-center justify-center gap-2 rounded-xl bg-forest-700 px-4 text-sm font-medium text-white transition-colors duration-200 hover:bg-forest-800"
               >
                 <MessageCircle aria-hidden className="size-4" />
                 პირდაპირ WhatsApp-ში მოწერა
@@ -112,10 +112,10 @@ export default function ContactPage() {
 
             <Reveal
               delay={160}
-              className="overflow-hidden rounded-xl border border-border bg-card"
+              className="overflow-hidden rounded-2xl border border-white/12 bg-teal-700/50"
             >
               <h2 className="sr-only">ოფისის მდებარეობა რუკაზე</h2>
-              <div className="aspect-[4/3] w-full">
+              <div className="aspect-16/11 w-full bg-teal-700/50">
                 <iframe
                   src={siteConfig.contact.mapEmbedUrl}
                   title={`${siteConfig.name} — ოფისის მდებარეობა`}

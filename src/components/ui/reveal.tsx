@@ -62,8 +62,8 @@ export function Reveal({
       data-visible={visible}
       className={cn(
         armed &&
-          "motion-safe:transition-[opacity,transform] motion-safe:duration-700 motion-safe:ease-out",
-        armed && !visible && "motion-safe:translate-y-4 motion-safe:opacity-0",
+          "motion-safe:transition-[opacity,transform] motion-safe:duration-700 motion-safe:ease-out-quint",
+        armed && !visible && "motion-safe:translate-y-6 motion-safe:opacity-0",
         armed && visible && "translate-y-0 opacity-100",
         className
       )}

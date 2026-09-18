@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { MessageCircle } from "lucide-react"
+import { Check, Loader2, MessageCircle } from "lucide-react"
 import { toast } from "sonner"
 
 import { services } from "@/content/services"
@@ -59,8 +59,16 @@ const contactSchema = z.object({
 type ContactValues = z.infer<typeof contactSchema>
 
 export function ContactForm() {
+  const [status, setStatus] = React.useState<"idle" | "sending" | "sent">(
+    "idle"
+  )
+
   const form = useForm<ContactValues>({
     resolver: zodResolver(contactSchema),
+    // Validate when a field loses focus, not on every keystroke — an error
+    // that appears mid-typing reads as the form arguing with you.
+    mode: "onBlur",
+    reValidateMode: "onBlur",
     defaultValues: {
       name: "",
       company: "",
@@ -72,6 +80,8 @@ export function ContactForm() {
   })
 
   function onSubmit(values: ContactValues) {
+    setStatus("sending")
+
     const url = buildWhatsAppUrl({
       name: values.name,
       company: values.company || undefined,
@@ -85,12 +95,21 @@ export function ContactForm() {
     const opened = window.open(url, "_blank", "noopener,noreferrer")
 
     if (opened) {
+      setStatus("sent")
       toast.success("WhatsApp იხსნება — შეტყობინება უკვე შევსებულია.")
       form.reset()
+      // Return the button to its resting label so the form can be reused.
+      window.setTimeout(() => setStatus("idle"), 4000)
     } else {
+      setStatus("idle")
       toast.error("ბრაუზერმა ახალი ფანჯარა დაბლოკა. სცადეთ ქვემოთ მოცემული ბმული.")
     }
   }
+
+  // `useWatch` subscribes to one field instead of re-rendering the whole form
+  // on every keystroke in any field.
+  const message = useWatch({ control: form.control, name: "message" })
+  const messageLength = message?.length ?? 0
 
   return (
     <Form {...form}>
@@ -107,7 +126,12 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel>სახელი და გვარი *</FormLabel>
                 <FormControl>
-                  <Input placeholder="ნინო კაპანაძე" autoComplete="name" {...field} />
+                  <Input
+                    className="h-11"
+                    placeholder="ნინო კაპანაძე"
+                    autoComplete="name"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,6 +146,7 @@ export function ContactForm() {
                 <FormLabel>კომპანია</FormLabel>
                 <FormControl>
                   <Input
+                    className="h-11"
                     placeholder="შპს „მაგალითი“"
                     autoComplete="organization"
                     {...field}
@@ -142,6 +167,7 @@ export function ContactForm() {
                 <FormLabel>ტელეფონი *</FormLabel>
                 <FormControl>
                   <Input
+                    className="h-11"
                     type="tel"
                     inputMode="tel"
                     dir="ltr"
@@ -163,6 +189,7 @@ export function ContactForm() {
                 <FormLabel>ელ-ფოსტა</FormLabel>
                 <FormControl>
                   <Input
+                    className="h-11"
                     type="email"
                     dir="ltr"
                     placeholder="name@company.ge"
@@ -184,7 +211,7 @@ export function ContactForm() {
               <FormLabel>პროექტის ტიპი *</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="h-11 w-full">
                     <SelectValue placeholder="აირჩიეთ მიმართულება" />
                   </SelectTrigger>
                 </FormControl>
@@ -206,7 +233,19 @@ export function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>შეტყობინება *</FormLabel>
+              <div className="flex items-baseline justify-between gap-3">
+                <FormLabel>შეტყობინება *</FormLabel>
+                <span
+                  aria-hidden
+                  className={
+                    messageLength > 1500
+                      ? "text-xs tabular-nums text-destructive"
+                      : "text-xs tabular-nums text-white/50"
+                  }
+                >
+                  {messageLength} / 1500
+                </span>
+              </div>
               <FormControl>
                 <Textarea
                   rows={6}
@@ -220,12 +259,40 @@ export function ContactForm() {
           )}
         />
 
-        <Button type="submit" size="lg" className="mt-1 w-full sm:w-auto">
-          <MessageCircle aria-hidden className="size-4" />
-          WhatsApp-ით გაგზავნა
+        <Button
+          type="submit"
+          size="lg"
+          disabled={status !== "idle"}
+          className="press mt-1 h-12 w-full sm:w-auto"
+        >
+          {status === "sending" ? (
+            <>
+              <Loader2 aria-hidden className="size-4 animate-spin" />
+              იხსნება…
+            </>
+          ) : status === "sent" ? (
+            <>
+              <Check aria-hidden className="size-4" />
+              გაიხსნა
+            </>
+          ) : (
+            <>
+              <MessageCircle aria-hidden className="size-4" />
+              WhatsApp-ით გაგზავნა
+            </>
+          )}
         </Button>
 
-        <p className="text-xs leading-relaxed text-muted-foreground">
+        {/* Announced to screen readers without stealing focus. */}
+        <p aria-live="polite" className="sr-only">
+          {status === "sending"
+            ? "იხსნება WhatsApp"
+            : status === "sent"
+              ? "WhatsApp გაიხსნა, შეტყობინება შევსებულია"
+              : ""}
+        </p>
+
+        <p className="text-xs leading-relaxed text-white/75">
           ღილაკზე დაჭერით იხსნება WhatsApp უკვე შევსებული შეტყობინებით — გაგზავნამდე
           შეგიძლიათ შეასწოროთ. მონაცემები ჩვენს სერვერზე არ ინახება.
         </p>

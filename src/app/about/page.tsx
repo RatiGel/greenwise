@@ -5,8 +5,11 @@ import { Award, ShieldCheck } from "lucide-react"
 import { certifications, milestones, mission, stats } from "@/content/about"
 import { getTeam } from "@/content/team"
 import { PageHeader } from "@/components/sections/page-header"
+import { MissionVision } from "@/components/sections/mission-vision"
 import { CtaBand } from "@/components/sections/cta-band"
-import { SectionHeading } from "@/components/layout/section"
+import { SectionHeading, SectionLabel } from "@/components/layout/section"
+import { CountUp } from "@/components/ui/count-up"
+import { Photo } from "@/components/ui/photo"
 import { Reveal } from "@/components/ui/reveal"
 
 export const metadata: Metadata = {
@@ -27,30 +30,35 @@ export default function AboutPage() {
         description="2012 წლიდან ვამზადებთ კვლევებს, რომლებსაც მარეგულირებელი იღებს და დამკვეთი პროექტის დაგეგმვაში იყენებს."
       />
 
-      <section className="section-y">
-        <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-          <Reveal>
-            <p className="text-sm font-medium text-forest-600">მისია</p>
-            <h2 className="mt-3 text-3xl font-semibold text-forest-900 sm:text-4xl">
-              {mission.heading}
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+      <section className="section-y-lg band-dark">
+        <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <Reveal className="lg:sticky lg:top-28 lg:self-start">
+            <SectionLabel>მისია</SectionLabel>
+            <h2 className="heading-lg mt-5 text-white">{mission.heading}</h2>
+            <p className="prose-measure mt-5 text-[1.0625rem] text-white/75">
               {mission.body}
             </p>
+            <Photo
+              alt="GREENWISE-ის გუნდი საველე სამუშაოზე"
+              ratio="16 / 10"
+              seed={6}
+              sizes="(min-width: 1024px) 46vw, 100vw"
+              className="mt-9"
+            />
           </Reveal>
 
-          <ul className="flex flex-col gap-5">
+          <ul className="flex flex-col">
             {mission.pillars.map((pillar, index) => (
               <Reveal
                 as="li"
                 key={pillar.title}
                 delay={index * 90}
-                className="rounded-xl border border-border bg-card p-6"
+                className="border-t border-white/12 py-7 first:border-t-0 first:pt-0"
               >
-                <h3 className="text-base font-semibold text-forest-900">
+                <h3 className="text-xl font-semibold text-white">
                   {pillar.title}
                 </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-3 leading-relaxed text-white/75">
                   {pillar.description}
                 </p>
               </Reveal>
@@ -59,17 +67,20 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-y border-border bg-forest-50/60">
+      <MissionVision />
+
+      <section className="border-y border-white/12 band-dark">
         <div className="container-page py-14">
-          <dl className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
             {stats.map((stat, index) => (
               <Reveal key={stat.label} delay={index * 80}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd>
-                  <span className="block font-heading text-3xl font-semibold text-forest-800 sm:text-4xl">
-                    {stat.value}
-                  </span>
-                  <span className="mt-2 block text-sm text-muted-foreground">
+                  <CountUp
+                    value={stat.value}
+                    className="block text-4xl font-bold text-green-500 sm:text-5xl"
+                  />
+                  <span className="mt-2.5 block text-sm text-white/65">
                     {stat.label}
                   </span>
                 </dd>
@@ -79,7 +90,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section-y">
+      <section className="section-y band-dark">
         <div className="container-page">
           <SectionHeading
             eyebrow="გამოცდილება"
@@ -91,18 +102,18 @@ export default function AboutPage() {
             {milestones.map((milestone, index) => (
               <Reveal as="li" key={milestone.year} delay={index * 90}>
                 <div className="flex items-center gap-3">
-                  <span className="font-heading text-2xl font-semibold text-forest-700">
+                  <span className="font-display text-2xl font-bold text-green-500">
                     {milestone.year}
                   </span>
                   <span
                     aria-hidden
-                    className="h-px flex-1 bg-gradient-to-r from-forest-500/40 to-transparent"
+                    className="h-px flex-1 bg-gradient-to-r from-forest-500/45 to-transparent"
                   />
                 </div>
-                <h3 className="mt-4 text-base font-semibold text-forest-900">
+                <h3 className="mt-4 text-base font-semibold text-white">
                   {milestone.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2 text-sm leading-relaxed text-white/75">
                   {milestone.description}
                 </p>
               </Reveal>
@@ -111,7 +122,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section-y bg-forest-50/60">
+      <section className="section-y band-dark">
         <div className="container-page">
           <SectionHeading
             eyebrow="გუნდი"
@@ -125,7 +136,7 @@ export default function AboutPage() {
                 as="li"
                 key={member.id}
                 delay={index * 90}
-                className="overflow-hidden rounded-xl border border-border bg-card"
+                className="group overflow-hidden rounded-2xl border border-white/12 bg-teal-700/50 transition-shadow duration-300 hover:shadow-lg hover:shadow-forest-900/[0.06]"
               >
                 <div className="relative aspect-[4/5] w-full bg-forest-100">
                   <Image
@@ -133,27 +144,27 @@ export default function AboutPage() {
                     alt={`${member.name} — ${member.role}`}
                     fill
                     sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="text-base font-semibold text-forest-900">
+                  <h3 className="text-base font-semibold text-white">
                     {member.name}
                   </h3>
-                  <p className="mt-1 text-sm text-forest-700">{member.role}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-1 text-sm text-green-500">{member.role}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-white/75">
                     {member.bio}
                   </p>
                   {member.credentials?.length ? (
-                    <ul className="mt-4 flex flex-col gap-1.5 border-t border-border pt-4">
+                    <ul className="mt-4 flex flex-col gap-1.5 border-t border-white/12 pt-4">
                       {member.credentials.map((credential) => (
                         <li
                           key={credential}
-                          className="flex items-start gap-2 text-xs text-muted-foreground"
+                          className="flex items-start gap-2 text-xs text-white/75"
                         >
                           <ShieldCheck
                             aria-hidden
-                            className="mt-0.5 size-3.5 shrink-0 text-forest-600"
+                            className="mt-0.5 size-3.5 shrink-0 text-green-500"
                           />
                           {credential}
                         </li>
@@ -167,7 +178,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section-y">
+      <section className="section-y band-dark">
         <div className="container-page">
           <SectionHeading
             eyebrow="ლიცენზიები და სერტიფიკატები"
@@ -181,16 +192,16 @@ export default function AboutPage() {
                 as="li"
                 key={certification.id}
                 delay={index * 80}
-                className="flex flex-col rounded-xl border border-border bg-card p-6"
+                className="flex flex-col rounded-2xl border border-white/12 bg-teal-700/50 p-6 transition-shadow duration-300 hover:shadow-lg hover:shadow-forest-900/[0.06]"
               >
-                <Award aria-hidden className="size-6 text-forest-600" />
-                <h3 className="mt-5 flex-1 text-base font-semibold text-forest-900">
+                <Award aria-hidden className="size-6 text-green-500" />
+                <h3 className="mt-5 flex-1 text-base font-semibold text-white">
                   {certification.title}
                 </h3>
-                <p className="mt-3 text-sm text-muted-foreground">
+                <p className="mt-3 text-sm text-white/75">
                   {certification.issuer}
                 </p>
-                <p className="mt-1 text-sm font-medium text-forest-700">
+                <p className="font-display mt-1 text-sm font-bold text-green-500">
                   {certification.year}
                 </p>
               </Reveal>

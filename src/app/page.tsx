@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 
 import { Hero } from "@/components/sections/hero"
+import { WhyChoose } from "@/components/sections/why-choose"
+import { AboutIntro } from "@/components/sections/about-intro"
+import { MissionVision } from "@/components/sections/mission-vision"
 import { ServiceCards } from "@/components/sections/service-cards"
-import { StatsBand } from "@/components/sections/stats-band"
-import { ClientStrip } from "@/components/sections/client-strip"
 import { MethodologyTeaser } from "@/components/sections/methodology-teaser"
+import { ClientStrip } from "@/components/sections/client-strip"
 import { CtaBand } from "@/components/sections/cta-band"
 
 export const metadata: Metadata = {
@@ -17,9 +19,12 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      {/* Bands alternate dark → light → dark, as in the reference. */}
       <Hero />
+      <WhyChoose />
+      <AboutIntro />
+      <MissionVision />
       <ServiceCards />
-      <StatsBand />
       <MethodologyTeaser />
       <ClientStrip />
       <CtaBand />

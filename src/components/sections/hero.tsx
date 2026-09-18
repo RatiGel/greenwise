@@ -1,95 +1,91 @@
-import Link from "next/link"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { stats } from "@/content/about"
+import { siteConfig } from "@/config/site"
+import { CountUp } from "@/components/ui/count-up"
+import { Photo } from "@/components/ui/photo"
+import { PillCta } from "@/components/ui/pill-cta"
 import { Reveal } from "@/components/ui/reveal"
+import { buildWhatsAppQuickUrl } from "@/lib/whatsapp"
 
-const highlights = [
-  "გზშ-სთვის მზა დოკუმენტაცია",
-  "13+ წლიანი საექსპერტო გამოცდილება",
-  "ფიქსირებული ვადა და ღირებულება",
-]
-
+/**
+ * Full-bleed photographic hero: the image runs edge to edge and the headline
+ * sits on top of it, over a scrim. Matches the reference's opening.
+ */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border bg-forest-900">
-      {/* Decorative gradient wash; no image request, so LCP stays text-only. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(120%_90%_at_85%_10%,color-mix(in_oklab,var(--forest-700)_78%,transparent)_0%,transparent_60%)]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-y-0 end-0 hidden w-1/2 opacity-[0.08] lg:block"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(115deg, white 0 1px, transparent 1px 22px)",
-        }}
-      />
+    <section className="relative isolate overflow-hidden band-dark">
+      {/* Backdrop: photo + scrim wrapped together so the scrim cannot rise
+          above the content that follows it. */}
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <Photo
+          src="/photos/hero.jpg"
+          alt=""
+          priority
+          seed={1}
+          sizes="100vw"
+          bleed
+          className="absolute inset-0 size-full rounded-none"
+        />
+        <div className="hero-scrim" />
+      </div>
 
-      <div className="container-page relative py-24 md:py-32 lg:py-36">
-        <div className="max-w-3xl">
+      <div className="relative container-page flex min-h-[min(88svh,56rem)] flex-col justify-end pt-32 pb-16 lg:pb-20">
+        <div className="max-w-4xl">
           <Reveal>
-            <p className="inline-flex items-center rounded-full border border-forest-500/40 bg-forest-500/10 px-3.5 py-1.5 text-sm text-forest-100">
-              გარემოსდაცვითი კონსალტინგი საქართველოში
-            </p>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <h1 className="mt-6 text-4xl font-semibold leading-[1.15] text-white sm:text-5xl lg:text-6xl">
-              გარემოსდაცვითი დოკუმენტაცია, რომელიც ნებართვას აჩქარებს
+            <h1 className="heading-xl text-white">
+              გარემოსდაცვითი დოკუმენტაცია, რომელიც{" "}
+              <span className="text-green-500">ნებართვას აჩქარებს</span>
             </h1>
           </Reveal>
 
-          <Reveal delay={160}>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-clay-200">
+          <Reveal delay={120}>
+            <p className="prose-measure mt-7 text-lg text-white/85">
               ბიომრავალფეროვნების შეფასება, ხე-მცენარეთა ინვენტარიზაცია,
               დენდროლოგიური ექსპერტიზა და ტყის აღდგენა — საველე მონაცემებზე
-              დაფუძნებული კვლევები დეველოპერების, მუნიციპალიტეტების,
-              არქიტექტორებისა და NGO-ებისთვის.
+              დაფუძნებული კვლევები.
             </p>
           </Reveal>
 
-          <Reveal delay={240}>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="group bg-white text-forest-900 hover:bg-clay-200">
-                <Link href="/contact">
-                  უფასო კონსულტაციის მოთხოვნა
-                  <ArrowRight
-                    aria-hidden
-                    className="size-4 transition-transform group-hover:translate-x-0.5"
-                  />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white"
-              >
-                <Link href="/services">სერვისების ნახვა</Link>
-              </Button>
+          <Reveal delay={200}>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <PillCta href="/contact">უფასო კონსულტაცია</PillCta>
+              <PillCta href={buildWhatsAppQuickUrl()} tone="onDark" external>
+                WhatsApp
+              </PillCta>
             </div>
           </Reveal>
-
-          <Reveal delay={320}>
-            <ul className="mt-12 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-7">
-              {highlights.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2.5 text-sm text-clay-200"
-                >
-                  <CheckCircle2
-                    aria-hidden
-                    className="size-4 shrink-0 text-forest-500"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
         </div>
+
+        {/* Stat strip pinned to the bottom of the image, as in the reference. */}
+        <Reveal delay={300}>
+          <dl className="mt-14 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-white/20 pt-8 sm:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <dt className="sr-only">{stat.label}</dt>
+                <dd>
+                  <CountUp
+                    value={stat.value}
+                    className="block text-3xl font-bold text-green-500 sm:text-4xl"
+                  />
+                  <span className="mt-2 block text-sm leading-snug text-white/75">
+                    {stat.label}
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
       </div>
+
+      {/* Vertical contact rail, mirroring the reference's LinkedIn rail. */}
+      <a
+        href={`tel:${siteConfig.contact.phoneHref}`}
+        className="absolute end-6 top-1/2 hidden -translate-y-1/2 items-center gap-3 text-sm text-white/70 transition-colors hover:text-green-500 xl:flex"
+        style={{ writingMode: "vertical-rl" }}
+      >
+        <span dir="ltr" className="font-display tracking-wide">
+          {siteConfig.contact.phone}
+        </span>
+      </a>
     </section>
   )
 }

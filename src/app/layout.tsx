@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Noto_Sans_Georgian } from "next/font/google"
+import { Manrope, Noto_Sans_Georgian } from "next/font/google"
 
 import { siteConfig } from "@/config/site"
 import { Header } from "@/components/layout/header"
@@ -12,8 +12,21 @@ const notoSansGeorgian = Noto_Sans_Georgian({
   subsets: ["georgian", "latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
-  variable: "--font-sans",
+  variable: "--font-noto-georgian",
   fallback: ["system-ui", "Segoe UI", "sans-serif"],
+})
+
+/**
+ * Display face for Latin numerals and the wordmark only. Manrope has no
+ * Georgian coverage, so it is never applied to body or heading text — the
+ * `.font-display` utility always lists --font-sans as the next fallback.
+ */
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  display: "swap",
+  variable: "--font-manrope",
+  fallback: ["system-ui", "sans-serif"],
 })
 
 export const metadata: Metadata = {
@@ -57,7 +70,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#14301F",
+  themeColor: "#1B3738",
   width: "device-width",
   initialScale: 1,
 }
@@ -86,11 +99,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={siteConfig.lang} className={`${notoSansGeorgian.variable} h-full`}>
-      <body className="flex min-h-full flex-col">
+    <html lang={siteConfig.lang} className={`${notoSansGeorgian.variable} ${manrope.variable} h-full`}>
+      <body className="flex min-h-full flex-col bg-teal-900">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+          className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-green-500 focus:px-4 focus:py-2 focus:text-teal-900"
         >
           გადასვლა მთავარ კონტენტზე
         </a>

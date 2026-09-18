@@ -21,16 +21,16 @@ export function Logo({
       <span
         aria-hidden
         className={cn(
-          "grid size-9 place-items-center rounded-md transition-colors",
-          inverted ? "bg-forest-100/15" : "bg-forest-700"
+          "grid size-10 place-items-center rounded-full transition-colors",
+          inverted ? "bg-green-500" : "bg-green-500"
         )}
       >
         <svg
           viewBox="0 0 24 24"
           fill="none"
           className={cn(
-            "size-5",
-            inverted ? "text-forest-100" : "text-primary-foreground"
+            "size-5.5",
+            "text-teal-900"
           )}
         >
           <path
@@ -56,8 +56,8 @@ export function Logo({
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-heading text-lg font-semibold tracking-tight",
-            inverted ? "text-white" : "text-forest-900"
+            "font-display text-lg font-extrabold tracking-[-0.02em]",
+            "text-white"
           )}
         >
           {siteConfig.name}
@@ -65,7 +65,7 @@ export function Logo({
         <span
           className={cn(
             "mt-1 text-[11px]",
-            inverted ? "text-clay-300" : "text-muted-foreground"
+            "text-white/60"
           )}
         >
           {siteConfig.tagline}
