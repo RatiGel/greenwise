@@ -103,7 +103,7 @@ export default function ContactPage() {
                 href={buildWhatsAppQuickUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-7 flex h-12 items-center justify-center gap-2 rounded-xl bg-forest-700 px-4 text-sm font-medium text-white transition-colors duration-200 hover:bg-forest-800"
+                className="press mt-7 flex h-12 items-center justify-center gap-2 rounded-xl border border-white/25 px-4 text-sm font-medium text-white transition-colors duration-200 hover:border-green-500/50 hover:bg-white/10 hover:text-green-500"
               >
                 <MessageCircle aria-hidden className="size-4" />
                 პირდაპირ WhatsApp-ში მოწერა

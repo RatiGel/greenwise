@@ -51,7 +51,10 @@ export function ServiceCards() {
                   <ServiceIcon name={service.icon} className="size-6" />
                 </span>
 
-                <div className="relative flex h-full flex-col justify-end p-6">
+                {/* The text block rises as one unit on hover. Transform only,
+                    so the card's own layout never reflows; `motion-safe`
+                    leaves it still for anyone who asked for reduced motion. */}
+                <div className="relative flex h-full flex-col justify-end p-6 transition-transform duration-500 ease-out-quint motion-safe:group-hover:-translate-y-2">
                   <h3 className="text-xl leading-snug font-semibold text-white transition-colors duration-300 group-hover:text-green-500">
                     {service.title}
                   </h3>

@@ -3,6 +3,13 @@
 import * as React from "react"
 import { cn } from "cn"
 
+/**
+ * `useLayoutEffect` warns when React renders on the server. The component is
+ * client-only in practice, but the guard keeps it silent during SSR.
+ */
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect
+
 interface RevealProps extends React.HTMLAttributes<HTMLElement> {
   /** Stagger delay in ms. Keep under ~400 so content never feels withheld. */
   delay?: number
@@ -27,7 +34,10 @@ export function Reveal({
   const [visible, setVisible] = React.useState(true)
   const [armed, setArmed] = React.useState(false)
 
-  React.useEffect(() => {
+  // Layout effect, not effect: the hidden state must be committed in the same
+  // frame as hydration. Deferring it to after paint makes above-the-fold
+  // content flash in at its final position and then animate in a second time.
+  useIsomorphicLayoutEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches
@@ -36,6 +46,11 @@ export function Reveal({
 
     const node = ref.current
     if (!node) return
+
+    // Anything already on screen at mount has nothing to reveal — animating it
+    // would mean hiding content the visitor is currently reading.
+    const box = node.getBoundingClientRect()
+    if (box.top < window.innerHeight && box.bottom > 0) return
 
     setArmed(true)
     setVisible(false)

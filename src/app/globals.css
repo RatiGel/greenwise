@@ -28,24 +28,6 @@
   --color-on-light-muted: var(--on-light-muted);
   --color-line-dark: var(--line-dark);
   --color-line-light: var(--line-light);
-  --color-forest-900: var(--forest-900);
-  --color-forest-800: var(--forest-800);
-  --color-forest-700: var(--forest-700);
-  --color-forest-600: var(--forest-600);
-  --color-forest-500: var(--forest-500);
-  --color-forest-100: var(--forest-100);
-  --color-forest-50: var(--forest-50);
-  --color-bark-700: var(--bark-700);
-  --color-bark-600: var(--bark-600);
-  --color-clay-400: var(--clay-400);
-  --color-clay-300: var(--clay-300);
-  --color-clay-200: var(--clay-200);
-  --color-sand-100: var(--sand-100);
-  --color-sand-50: var(--sand-50);
-  --color-ink-900: var(--ink-900);
-  --color-ink-700: var(--ink-700);
-  --color-ink-600: var(--ink-600);
-  --color-ink-500: var(--ink-500);
 
   --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -284,8 +266,8 @@
   }
 
   ::selection {
-    background-color: var(--forest-100);
-    color: var(--forest-900);
+    background-color: var(--green-500);
+    color: var(--teal-900);
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -30,7 +30,7 @@ export default function MethodologyPage() {
           <ol className="relative flex flex-col gap-10 md:gap-12">
             <span
               aria-hidden
-              className="absolute start-[22px] top-3 bottom-3 hidden w-px bg-gradient-to-b from-forest-500/45 via-forest-500/25 to-transparent md:block"
+              className="absolute start-[22px] top-3 bottom-3 hidden w-px bg-gradient-to-b from-green-500/45 via-green-500/25 to-transparent md:block"
             />
 
             {steps.map((step, index) => (
@@ -40,23 +40,27 @@ export default function MethodologyPage() {
                 delay={index * 100}
                 className="relative grid gap-5 md:grid-cols-[46px_1fr] md:gap-8"
               >
-                <span className="font-display z-10 grid size-11 place-items-center rounded-full border border-forest-500/40 bg-teal-900 text-base font-bold text-green-500">
+                <span className="font-display z-10 grid size-11 place-items-center rounded-full border border-green-500/40 bg-teal-900 text-base font-bold text-green-500">
                   {String(step.step).padStart(2, "0")}
                 </span>
 
-                <div className="rounded-2xl border border-white/12 bg-teal-700/50 p-6 transition-shadow duration-300 hover:shadow-lg hover:shadow-forest-900/[0.06] md:p-8">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h2 className="text-xl font-semibold text-white sm:text-2xl">
-                      {step.title}
-                    </h2>
-                    <span className="rounded-full bg-green-500/15 px-3 py-1 text-xs font-medium text-green-500">
-                      {step.duration}
-                    </span>
-                  </div>
+                <div className="group/card rounded-2xl border border-white/12 bg-teal-700/50 p-6 transition-[transform,box-shadow] duration-400 ease-out-quint hover:-translate-y-1 hover:shadow-xl hover:shadow-black/25 md:p-8">
+                  {/* Title and body shift together; the deliverable footer
+                      below keeps its rule anchored to the card edge. */}
+                  <div className="transition-transform duration-400 ease-out-quint motion-safe:group-hover/card:translate-x-1">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <h2 className="text-xl font-semibold text-white sm:text-2xl">
+                        {step.title}
+                      </h2>
+                      <span className="rounded-full bg-green-500/15 px-3 py-1 text-xs font-medium text-green-500">
+                        {step.duration}
+                      </span>
+                    </div>
 
-                  <p className="prose-measure mt-4 text-white/75">
-                    {step.description}
-                  </p>
+                    <p className="prose-measure mt-4 text-white/75">
+                      {step.description}
+                    </p>
+                  </div>
 
                   <div className="mt-6 flex items-start gap-3 border-t border-white/12 pt-5">
                     <FileCheck2

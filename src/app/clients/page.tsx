@@ -79,9 +79,13 @@ export default function ClientsPage() {
                       as="li"
                       key={client.id}
                       delay={index * 60}
-                      className="flex min-h-[5.5rem] items-center justify-center rounded-xl border border-white/12 bg-teal-700/50 px-4 py-5 text-center text-sm font-medium text-white/75 transition-colors duration-300 hover:border-forest-500/45 hover:bg-green-500/15 hover:text-green-500"
+                      className="group/tile flex min-h-[5.5rem] items-center justify-center rounded-xl border border-white/12 bg-teal-700/50 px-4 py-5 text-center text-sm font-medium text-white/75 transition-colors duration-300 hover:border-green-500/45 hover:bg-green-500/15 hover:text-green-500"
                     >
-                      {client.name}
+                      {/* The name is its own element so it can lift without
+                          touching Reveal's transform on the tile. */}
+                      <span className="transition-transform duration-300 ease-out-quint motion-safe:group-hover/tile:-translate-y-0.5">
+                        {client.name}
+                      </span>
                     </Reveal>
                   ))}
                 </ul>

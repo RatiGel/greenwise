@@ -26,10 +26,26 @@ export function Header() {
   const [open, setOpen] = React.useState(false)
 
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
-    onScroll()
+    // rAF-throttled so the scroll position is read once per frame rather than
+    // once per event; scroll events can outpace frames on a trackpad.
+    let frame = 0
+
+    const update = () => {
+      frame = 0
+      setScrolled(window.scrollY > 12)
+    }
+
+    const onScroll = () => {
+      if (frame) return
+      frame = requestAnimationFrame(update)
+    }
+
+    update()
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
 
   const isActive = (href: string) =>
@@ -59,8 +75,8 @@ export function Header() {
                   className={cn(
                     "inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200",
                     isActive(item.href)
-                      ? "bg-forest-50 text-forest-800"
-                      : "text-ink-700 hover:bg-forest-50 hover:text-forest-800"
+                      ? "bg-white/12 text-green-500"
+                      : "text-white/80 hover:bg-white/8 hover:text-white"
                   )}
                 >
                   {item.label}
@@ -74,7 +90,7 @@ export function Header() {
 
                 {item.children ? (
                   <div className="invisible absolute start-0 top-full z-(--z-dropdown) w-72 pt-2 opacity-0 transition-[opacity,visibility] duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                    <ul className="overflow-hidden rounded-2xl border border-line bg-surface p-2 shadow-xl shadow-forest-900/[0.08]">
+                    <ul className="overflow-hidden rounded-2xl border border-white/12 bg-teal-800 p-2 shadow-xl shadow-black/40">
                       {item.children.map((child) => (
                         <li key={child.href}>
                           <Link

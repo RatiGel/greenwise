@@ -50,6 +50,7 @@ export default function ServicesPage() {
                 </p>
 
                 <Photo
+                  src={`/photos/service-${service.slug}.jpg`}
                   alt={service.title}
                   ratio="16 / 10"
                   seed={index + 7}
@@ -79,7 +80,7 @@ export default function ServicesPage() {
               <Reveal
                 delay={120}
                 className={cn(
-                  "grid content-start gap-5 sm:grid-cols-2 lg:grid-cols-1",
+                  "grid content-start gap-5 sm:grid-cols-2 lg:sticky lg:top-28 lg:grid-cols-1 lg:self-start",
                   index % 2 === 1 && "lg:order-1"
                 )}
               >

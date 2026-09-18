@@ -39,6 +39,7 @@ export default function AboutPage() {
               {mission.body}
             </p>
             <Photo
+              src="/photos/about-team.jpg"
               alt="GREENWISE-ის გუნდი საველე სამუშაოზე"
               ratio="16 / 10"
               seed={6}
@@ -107,7 +108,7 @@ export default function AboutPage() {
                   </span>
                   <span
                     aria-hidden
-                    className="h-px flex-1 bg-gradient-to-r from-forest-500/45 to-transparent"
+                    className="h-px flex-1 bg-gradient-to-r from-green-500/45 to-transparent"
                   />
                 </div>
                 <h3 className="mt-4 text-base font-semibold text-white">
@@ -136,41 +137,45 @@ export default function AboutPage() {
                 as="li"
                 key={member.id}
                 delay={index * 90}
-                className="group overflow-hidden rounded-2xl border border-white/12 bg-teal-700/50 transition-shadow duration-300 hover:shadow-lg hover:shadow-forest-900/[0.06]"
               >
-                <div className="relative aspect-[4/5] w-full bg-forest-100">
-                  <Image
-                    src={member.photo}
-                    alt={`${member.name} — ${member.role}`}
-                    fill
-                    sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="text-base font-semibold text-white">
-                    {member.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-green-500">{member.role}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-white/75">
-                    {member.bio}
-                  </p>
-                  {member.credentials?.length ? (
-                    <ul className="mt-4 flex flex-col gap-1.5 border-t border-white/12 pt-4">
-                      {member.credentials.map((credential) => (
-                        <li
-                          key={credential}
-                          className="flex items-start gap-2 text-xs text-white/75"
-                        >
-                          <ShieldCheck
-                            aria-hidden
-                            className="mt-0.5 size-3.5 shrink-0 text-green-500"
-                          />
-                          {credential}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
+                {/* The lift lives on an inner wrapper, not on Reveal itself:
+                    both drive `transform`, so sharing one node would let a
+                    hover cancel the reveal's slide-up mid-animation. */}
+                <div className="group h-full overflow-hidden rounded-2xl border border-white/12 bg-teal-700/50 transition-[transform,box-shadow] duration-400 ease-out-quint hover:-translate-y-1 hover:shadow-xl hover:shadow-black/25">
+                  <div className="relative aspect-[4/5] w-full bg-teal-700">
+                    <Image
+                      src={member.photo}
+                      alt={`${member.name} — ${member.role}`}
+                      fill
+                      sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div className="p-5 transition-transform duration-400 ease-out-quint motion-safe:group-hover:-translate-y-1">
+                    <h3 className="text-base font-semibold text-white">
+                      {member.name}
+                    </h3>
+                    <p className="mt-1 text-sm text-green-500">{member.role}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-white/75">
+                      {member.bio}
+                    </p>
+                    {member.credentials?.length ? (
+                      <ul className="mt-4 flex flex-col gap-1.5 border-t border-white/12 pt-4">
+                        {member.credentials.map((credential) => (
+                          <li
+                            key={credential}
+                            className="flex items-start gap-2 text-xs text-white/75"
+                          >
+                            <ShieldCheck
+                              aria-hidden
+                              className="mt-0.5 size-3.5 shrink-0 text-green-500"
+                            />
+                            {credential}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -192,18 +197,23 @@ export default function AboutPage() {
                 as="li"
                 key={certification.id}
                 delay={index * 80}
-                className="flex flex-col rounded-2xl border border-white/12 bg-teal-700/50 p-6 transition-shadow duration-300 hover:shadow-lg hover:shadow-forest-900/[0.06]"
+                className="flex"
               >
-                <Award aria-hidden className="size-6 text-green-500" />
-                <h3 className="mt-5 flex-1 text-base font-semibold text-white">
-                  {certification.title}
-                </h3>
-                <p className="mt-3 text-sm text-white/75">
-                  {certification.issuer}
-                </p>
-                <p className="font-display mt-1 text-sm font-bold text-green-500">
-                  {certification.year}
-                </p>
+                {/* Lift on an inner element — Reveal owns this node's transform. */}
+                <div className="group/card flex h-full w-full flex-col rounded-2xl border border-white/12 bg-teal-700/50 p-6 transition-[transform,box-shadow] duration-400 ease-out-quint hover:-translate-y-1 hover:shadow-xl hover:shadow-black/25">
+                  <Award aria-hidden className="size-6 text-green-500" />
+                  <div className="flex flex-1 flex-col transition-transform duration-400 ease-out-quint motion-safe:group-hover/card:translate-x-1">
+                    <h3 className="mt-5 flex-1 text-base font-semibold text-white">
+                      {certification.title}
+                    </h3>
+                    <p className="mt-3 text-sm text-white/75">
+                      {certification.issuer}
+                    </p>
+                    <p className="font-display mt-1 text-sm font-bold text-green-500">
+                      {certification.year}
+                    </p>
+                  </div>
+                </div>
               </Reveal>
             ))}
           </ul>
