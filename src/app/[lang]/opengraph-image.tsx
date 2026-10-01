@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og"
+import { readFile } from "node:fs/promises"
+import { join } from "node:path"
 
 import { siteConfig } from "@/config/site"
 import { isLocale, locales, defaultLocale } from "@/lib/i18n/config"
@@ -22,6 +24,20 @@ export function generateStaticParams() {
  * headline below is localized.
  */
 export const alt = `${siteConfig.name} — ${siteConfig.tagline.en}`
+
+/**
+ * Satori does not inherit the page's `next/font` faces — it only knows the
+ * fonts handed to `ImageResponse`. Its bundled fallback is Latin-only, so
+ * without this the Georgian card renders every glyph as a tofu box (U+10A0–
+ * U+10FF has no coverage). This TTF covers Georgian *and* Latin, so one face
+ * serves both locales' cards.
+ *
+ * Read once at module scope: the font does not depend on request data, and
+ * re-reading per request would defeat the route's static generation.
+ */
+const notoSansGeorgian = await readFile(
+  join(process.cwd(), "assets/NotoSansGeorgian-SemiBold.ttf")
+)
 
 /**
  * An opengraph-image is a Route Handler, where `next/root-params` is not
@@ -59,13 +75,16 @@ export default async function OpengraphImage({
           >
             GREENWISE
           </div>
+          {/* Sized for the longest headline, which is the Georgian one: it
+              wraps to four lines where English takes three, and Georgian has
+              taller ascenders. 60/1.2 keeps four lines clear of the footer. */}
           <div
             style={{
-              marginTop: 40,
-              fontSize: 68,
-              lineHeight: 1.15,
+              marginTop: 36,
+              fontSize: 60,
+              lineHeight: 1.2,
               color: "#FFFFFF",
-              maxWidth: 900,
+              maxWidth: 1000,
               display: "flex",
             }}
           >
@@ -87,6 +106,16 @@ export default async function OpengraphImage({
         </div>
       </div>
     ),
-    size
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Noto Sans Georgian",
+          data: notoSansGeorgian,
+          weight: 600,
+          style: "normal",
+        },
+      ],
+    }
   )
 }

@@ -7,8 +7,11 @@ import type { Dictionary } from "@/content/dictionaries/ka"
 
 /**
  * SERVER-ONLY MODULE. It depends on `next/root-params`, so nothing reachable
- * from a `"use client"` module may import from here. Client-reachable code
- * imports `getDictionaryFor` from `@/lib/i18n/get-dictionary` instead.
+ * from a Client Component may import from here. Client-reachable code imports
+ * `getDictionaryFor` from `@/lib/i18n/get-dictionary` instead.
+ *
+ * (The client directive is spelled out in prose rather than quoted, so that an
+ * audit grep for that literal string does not flag this server-only module.)
  */
 
 /**

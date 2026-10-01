@@ -217,7 +217,7 @@ export const en: Dictionary = {
     noteNgos:
       "Biodiversity studies and monitoring of restoration programmes.",
     noteArchitects:
-      "Early involvement, so the design can be fitted around valuable planting.",
+      "Early involvement, so the design can be fitted around valuable trees.",
     confidentialityNote:
       "Some projects are covered by confidentiality agreements, so not every client appears in this list. On request we will provide references for relevant experience.",
     ctaTitle: "Would you like to discuss a similar project?",
