@@ -1,10 +1,11 @@
 import { siteConfig } from "@/config/site"
+import { getLocale } from "@/lib/i18n/dictionaries"
 import { PillCta } from "@/components/ui/pill-cta"
 import { Reveal } from "@/components/ui/reveal"
 import { SectionBackdrop } from "@/components/ui/section-backdrop"
 import { buildWhatsAppQuickUrl } from "@/lib/whatsapp"
 
-export function CtaBand({
+export async function CtaBand({
   title = "დაგეგმეთ პროექტი",
   accent = "შეფერხების გარეშე",
   description = "მოგვწერეთ პროექტის მოკლე აღწერა — გიპასუხებთ, რომელი კვლევაა სავალდებულო, რა ვადაში და რა ღირებულებით.",
@@ -13,6 +14,8 @@ export function CtaBand({
   accent?: string
   description?: string
 }) {
+  const locale = await getLocale()
+
   return (
     <section className="section-y band-dark">
       <div className="container-page">
@@ -27,7 +30,7 @@ export function CtaBand({
 
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <PillCta href="/contact">კონსულტაციის მოთხოვნა</PillCta>
-            <PillCta href={buildWhatsAppQuickUrl()} tone="onDark" external>
+            <PillCta href={buildWhatsAppQuickUrl(locale)} tone="onDark" external>
               WhatsApp-ით დაკავშირება
             </PillCta>
           </div>

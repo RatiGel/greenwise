@@ -8,6 +8,8 @@ import { Check, Loader2, MessageCircle } from "lucide-react"
 import { toast } from "sonner"
 
 import { services } from "@/content/services"
+import type { Dictionary } from "@/content/dictionaries/ka"
+import { useDictionary, useLocale } from "@/lib/i18n/locale-context"
 import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -28,40 +30,53 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const projectTypes = [
-  ...services.map((service) => service.title),
-  "სხვა / ჯერ არ ვიცი",
-]
+/**
+ * The zod schema's validation messages must be localized, and the dictionary
+ * is only available inside the component (via `useDictionary()`), so the
+ * schema is built by this factory instead of being declared at module scope.
+ */
+function buildContactSchema(t: Dictionary["form"]) {
+  return z.object({
+    name: z
+      .string()
+      .min(2, { message: t.nameTooShort })
+      .max(80, { message: t.nameTooLong }),
+    company: z.string().max(120, { message: t.companyTooLong }).optional(),
+    phone: z
+      .string()
+      .min(9, { message: t.phoneTooShort })
+      .max(20, { message: t.phoneTooLong })
+      .regex(/^[0-9+\s()-]+$/, {
+        message: t.phoneInvalidChars,
+      }),
+    email: z
+      .union([z.string().email({ message: t.emailInvalid }), z.literal("")])
+      .optional(),
+    projectType: z.string().min(1, { message: t.projectTypeRequiredMessage }),
+    message: z
+      .string()
+      .min(10, { message: t.messageTooShort })
+      .max(1500, { message: t.messageTooLong }),
+  })
+}
 
-const contactSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "მიუთითეთ სახელი (მინიმუმ 2 სიმბოლო)" })
-    .max(80, { message: "სახელი ძალიან გრძელია" }),
-  company: z.string().max(120, { message: "დასახელება ძალიან გრძელია" }).optional(),
-  phone: z
-    .string()
-    .min(9, { message: "მიუთითეთ სწორი ტელეფონის ნომერი" })
-    .max(20, { message: "ნომერი ძალიან გრძელია" })
-    .regex(/^[0-9+\s()-]+$/, {
-      message: "ნომერი უნდა შეიცავდეს მხოლოდ ციფრებს და სიმბოლოებს + ( ) -",
-    }),
-  email: z
-    .union([z.string().email({ message: "მიუთითეთ სწორი ელ-ფოსტა" }), z.literal("")])
-    .optional(),
-  projectType: z.string().min(1, { message: "აირჩიეთ პროექტის ტიპი" }),
-  message: z
-    .string()
-    .min(10, { message: "აღწერეთ პროექტი (მინიმუმ 10 სიმბოლო)" })
-    .max(1500, { message: "ტექსტი ძალიან გრძელია" }),
-})
-
-type ContactValues = z.infer<typeof contactSchema>
+type ContactValues = z.infer<ReturnType<typeof buildContactSchema>>
 
 export function ContactForm() {
+  const dictionary = useDictionary()
+  const locale = useLocale()
+  const t = dictionary.form
+
   const [status, setStatus] = React.useState<"idle" | "sending" | "sent">(
     "idle"
   )
+
+  const projectTypes = React.useMemo(
+    () => [...services.map((service) => service.title), t.projectTypeOther],
+    [t.projectTypeOther]
+  )
+
+  const contactSchema = React.useMemo(() => buildContactSchema(t), [t])
 
   const form = useForm<ContactValues>({
     resolver: zodResolver(contactSchema),
@@ -82,27 +97,30 @@ export function ContactForm() {
   function onSubmit(values: ContactValues) {
     setStatus("sending")
 
-    const url = buildWhatsAppUrl({
-      name: values.name,
-      company: values.company || undefined,
-      phone: values.phone,
-      email: values.email || undefined,
-      projectType: values.projectType,
-      message: values.message,
-    })
+    const url = buildWhatsAppUrl(
+      {
+        name: values.name,
+        company: values.company || undefined,
+        phone: values.phone,
+        email: values.email || undefined,
+        projectType: values.projectType,
+        message: values.message,
+      },
+      locale
+    )
 
     // Popup blockers only allow this inside the click-initiated handler.
     const opened = window.open(url, "_blank", "noopener,noreferrer")
 
     if (opened) {
       setStatus("sent")
-      toast.success("WhatsApp იხსნება — შეტყობინება უკვე შევსებულია.")
+      toast.success(t.whatsappOpening)
       form.reset()
       // Return the button to its resting label so the form can be reused.
       window.setTimeout(() => setStatus("idle"), 4000)
     } else {
       setStatus("idle")
-      toast.error("ბრაუზერმა ახალი ფანჯარა დაბლოკა. სცადეთ ქვემოთ მოცემული ბმული.")
+      toast.error(t.popupBlocked)
     }
   }
 
@@ -124,11 +142,11 @@ export function ContactForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>სახელი და გვარი *</FormLabel>
+                <FormLabel>{t.fullName}</FormLabel>
                 <FormControl>
                   <Input
                     className="h-11"
-                    placeholder="ნინო კაპანაძე"
+                    placeholder={t.namePlaceholder}
                     autoComplete="name"
                     {...field}
                   />
@@ -143,11 +161,11 @@ export function ContactForm() {
             name="company"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>კომპანია</FormLabel>
+                <FormLabel>{t.company}</FormLabel>
                 <FormControl>
                   <Input
                     className="h-11"
-                    placeholder="შპს „მაგალითი“"
+                    placeholder={t.companyPlaceholder}
                     autoComplete="organization"
                     {...field}
                   />
@@ -164,7 +182,7 @@ export function ContactForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ტელეფონი *</FormLabel>
+                <FormLabel>{t.phoneRequired}</FormLabel>
                 <FormControl>
                   <Input
                     className="h-11"
@@ -186,7 +204,7 @@ export function ContactForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ელ-ფოსტა</FormLabel>
+                <FormLabel>{t.email}</FormLabel>
                 <FormControl>
                   <Input
                     className="h-11"
@@ -208,11 +226,11 @@ export function ContactForm() {
           name="projectType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>პროექტის ტიპი *</FormLabel>
+              <FormLabel>{t.projectTypeRequired}</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger className="h-11 w-full">
-                    <SelectValue placeholder="აირჩიეთ მიმართულება" />
+                    <SelectValue placeholder={t.projectTypePlaceholder} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -234,7 +252,7 @@ export function ContactForm() {
           render={({ field }) => (
             <FormItem>
               <div className="flex items-baseline justify-between gap-3">
-                <FormLabel>შეტყობინება *</FormLabel>
+                <FormLabel>{t.messageRequired}</FormLabel>
                 <span
                   aria-hidden
                   className={
@@ -249,7 +267,7 @@ export function ContactForm() {
               <FormControl>
                 <Textarea
                   rows={6}
-                  placeholder="მოკლედ აღწერეთ ობიექტი, ფართობი, ლოკაცია და სასურველი ვადა."
+                  placeholder={t.messagePlaceholder}
                   className="resize-y"
                   {...field}
                 />
@@ -268,17 +286,17 @@ export function ContactForm() {
           {status === "sending" ? (
             <>
               <Loader2 aria-hidden className="size-4 animate-spin" />
-              იხსნება…
+              {t.sending}
             </>
           ) : status === "sent" ? (
             <>
               <Check aria-hidden className="size-4" />
-              გაიხსნა
+              {t.sent}
             </>
           ) : (
             <>
               <MessageCircle aria-hidden className="size-4" />
-              WhatsApp-ით გაგზავნა
+              {t.sendViaWhatsApp}
             </>
           )}
         </Button>
@@ -286,16 +304,13 @@ export function ContactForm() {
         {/* Announced to screen readers without stealing focus. */}
         <p aria-live="polite" className="sr-only">
           {status === "sending"
-            ? "იხსნება WhatsApp"
+            ? t.liveStatusSending
             : status === "sent"
-              ? "WhatsApp გაიხსნა, შეტყობინება შევსებულია"
+              ? t.liveStatusSent
               : ""}
         </p>
 
-        <p className="text-xs leading-relaxed text-white/75">
-          ღილაკზე დაჭერით იხსნება WhatsApp უკვე შევსებული შეტყობინებით — გაგზავნამდე
-          შეგიძლიათ შეასწოროთ. მონაცემები ჩვენს სერვერზე არ ინახება.
-        </p>
+        <p className="text-xs leading-relaxed text-white/75">{t.disclaimer}</p>
       </form>
     </Form>
   )

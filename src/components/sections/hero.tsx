@@ -1,5 +1,6 @@
 import { stats } from "@/content/about"
 import { siteConfig } from "@/config/site"
+import { getLocale } from "@/lib/i18n/dictionaries"
 import { CountUp } from "@/components/ui/count-up"
 import { Photo } from "@/components/ui/photo"
 import { PillCta } from "@/components/ui/pill-cta"
@@ -10,7 +11,9 @@ import { buildWhatsAppQuickUrl } from "@/lib/whatsapp"
  * Full-bleed photographic hero: the image runs edge to edge and the headline
  * sits on top of it, over a scrim. Matches the reference's opening.
  */
-export function Hero() {
+export async function Hero() {
+  const locale = await getLocale()
+
   return (
     <section className="relative isolate overflow-hidden band-dark">
       {/* Backdrop: photo + scrim wrapped together so the scrim cannot rise
@@ -48,7 +51,7 @@ export function Hero() {
           <Reveal delay={200}>
             <div className="mt-10 flex flex-wrap gap-3">
               <PillCta href="/contact">უფასო კონსულტაცია</PillCta>
-              <PillCta href={buildWhatsAppQuickUrl()} tone="onDark" external>
+              <PillCta href={buildWhatsAppQuickUrl(locale)} tone="onDark" external>
                 WhatsApp
               </PillCta>
             </div>

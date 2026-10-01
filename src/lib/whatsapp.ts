@@ -1,4 +1,6 @@
 import { siteConfig } from "@/config/site"
+import type { Locale } from "@/lib/i18n/config"
+import { getDictionaryFor } from "@/lib/i18n/dictionaries"
 
 export interface WhatsAppEnquiry {
   name: string
@@ -10,24 +12,28 @@ export interface WhatsAppEnquiry {
 }
 
 /**
- * Builds the wa.me deep link for a contact enquiry.
+ * Builds the wa.me deep link for a contact enquiry, in the visitor's language,
+ * so an English visitor's enquiry does not arrive in Georgian.
  *
- * The message body is assembled as plain text and URL-encoded in full; wa.me
- * requires the number as digits only, without "+" or separators.
+ * wa.me requires the number as digits only, without "+" or separators.
  */
-export function buildWhatsAppUrl(enquiry: WhatsAppEnquiry): string {
+export function buildWhatsAppUrl(
+  enquiry: WhatsAppEnquiry,
+  locale: Locale
+): string {
   const number = siteConfig.whatsappNumber.replace(/\D/g, "")
+  const t = getDictionaryFor(locale).whatsapp
 
   const lines = [
-    "ახალი მოთხოვნა — greenwise.ge",
+    t.enquiryHeading,
     "",
-    `სახელი: ${enquiry.name}`,
-    enquiry.company ? `კომპანია: ${enquiry.company}` : null,
-    `ტელეფონი: ${enquiry.phone}`,
-    enquiry.email ? `ელ-ფოსტა: ${enquiry.email}` : null,
-    `პროექტის ტიპი: ${enquiry.projectType}`,
+    `${t.name}: ${enquiry.name}`,
+    enquiry.company ? `${t.company}: ${enquiry.company}` : null,
+    `${t.phone}: ${enquiry.phone}`,
+    enquiry.email ? `${t.email}: ${enquiry.email}` : null,
+    `${t.projectType}: ${enquiry.projectType}`,
     "",
-    "შეტყობინება:",
+    `${t.messageLabel}:`,
     enquiry.message,
   ].filter((line): line is string => line !== null)
 
@@ -35,9 +41,8 @@ export function buildWhatsAppUrl(enquiry: WhatsAppEnquiry): string {
 }
 
 /** Short link used by header/footer CTAs, with no prefilled form data. */
-export function buildWhatsAppQuickUrl(text?: string): string {
+export function buildWhatsAppQuickUrl(locale: Locale, text?: string): string {
   const number = siteConfig.whatsappNumber.replace(/\D/g, "")
-  const body =
-    text ?? "გამარჯობა! მაინტერესებს კონსულტაცია გარემოსდაცვით მომსახურებაზე."
+  const body = text ?? getDictionaryFor(locale).whatsapp.quickMessage
   return `https://wa.me/${number}?text=${encodeURIComponent(body)}`
 }

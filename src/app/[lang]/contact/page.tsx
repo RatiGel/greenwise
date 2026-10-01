@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
+import { getLocale } from "@/lib/i18n/dictionaries"
 import { buildWhatsAppQuickUrl } from "@/lib/whatsapp"
 import { PageHeader } from "@/components/sections/page-header"
 import { ContactForm } from "@/components/sections/contact-form"
@@ -45,7 +46,9 @@ const contactItems = [
   },
 ]
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const locale = await getLocale()
+
   return (
     <>
       <PageHeader
@@ -100,7 +103,7 @@ export default function ContactPage() {
               </ul>
 
               <a
-                href={buildWhatsAppQuickUrl()}
+                href={buildWhatsAppQuickUrl(locale)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="press mt-7 flex h-12 items-center justify-center gap-2 rounded-xl border border-white/25 px-4 text-sm font-medium text-white transition-colors duration-200 hover:border-green-500/50 hover:bg-white/10 hover:text-green-500"
