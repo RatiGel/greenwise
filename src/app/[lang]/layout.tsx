@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Toaster } from "@/components/ui/sonner"
-import { locales } from "@/lib/i18n/config"
+import { locales, localizedPath } from "@/lib/i18n/config"
 import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { LocaleProvider } from "@/lib/i18n/locale-context"
 
@@ -32,70 +32,46 @@ const manrope = Manrope({
   fallback: ["system-ui", "sans-serif"],
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    "ბიომრავალფეროვნების შეფასება",
-    "ხეების ინვენტარიზაცია",
-    "ხე-მცენარეთა კადასტრი",
-    "დენდროლოგია",
-    "ტყის აღდგენა",
-    "გარემოზე ზემოქმედების შეფასება",
-    "გარემოსდაცვითი კონსალტინგი",
-    "ეკოლოგიური ექსპერტიზა",
-  ],
-  authors: [{ name: siteConfig.name }],
-  creator: siteConfig.name,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: siteConfig.locale,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
+/**
+ * `generateMetadata` rather than a static `metadata` export: the title,
+ * description and keywords are all per-locale, and a static export cannot
+ * read the route's locale.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const dict = await getDictionary()
+  const title = `${siteConfig.name} — ${siteConfig.tagline[locale]}`
+  const description = siteConfig.description[locale]
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: { default: title, template: `%s | ${siteConfig.name}` },
+    description,
+    keywords: [...dict.meta.keywords],
+    authors: [{ name: siteConfig.name }],
+    creator: siteConfig.name,
+    alternates: { canonical: localizedPath("/", locale) },
+    openGraph: {
+      type: "website",
+      locale: siteConfig.ogLocale[locale],
+      url: `${siteConfig.url}${localizedPath("/", locale)}`,
+      siteName: siteConfig.name,
+      title,
+      description,
+    },
+    twitter: { card: "summary_large_image", title, description },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+  }
 }
 
 export const viewport: Viewport = {
   themeColor: "#1B3738",
   width: "device-width",
   initialScale: 1,
-}
-
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: siteConfig.name,
-  alternateName: siteConfig.nameKa,
-  description: siteConfig.description,
-  url: siteConfig.url,
-  telephone: siteConfig.contact.phone,
-  email: siteConfig.contact.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: siteConfig.contact.address,
-    addressLocality: "თბილისი",
-    addressCountry: "GE",
-  },
-  areaServed: { "@type": "Country", name: "Georgia" },
-  knowsLanguage: ["ka", "en"],
-  sameAs: [siteConfig.social.facebook, siteConfig.social.linkedin],
 }
 
 export async function generateStaticParams() {
@@ -107,6 +83,28 @@ export default async function RootLayout({
 }: LayoutProps<"/[lang]">) {
   const locale = await getLocale()
   const dictionary = await getDictionary()
+
+  // Built per render rather than at module scope: the description, address
+  // and locality all vary by locale.
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: siteConfig.name,
+    alternateName: siteConfig.nameKa,
+    description: siteConfig.description[locale],
+    url: siteConfig.url,
+    telephone: siteConfig.contact.phone,
+    email: siteConfig.contact.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.contact.address[locale],
+      addressLocality: dictionary.meta.addressLocality,
+      addressCountry: "GE",
+    },
+    areaServed: { "@type": "Country", name: "Georgia" },
+    knowsLanguage: ["ka", "en"],
+    sameAs: [siteConfig.social.facebook, siteConfig.social.linkedin],
+  }
 
   return (
     <html
@@ -120,7 +118,7 @@ export default async function RootLayout({
             href="#main"
             className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-green-500 focus:px-4 focus:py-2 focus:text-teal-900"
           >
-            გადასვლა მთავარ კონტენტზე
+            {dictionary.nav.skipToContent}
           </a>
           <Header />
           <main id="main" className="flex-1">

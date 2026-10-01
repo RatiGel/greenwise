@@ -1,12 +1,40 @@
 import { ImageResponse } from "next/og"
 
 import { siteConfig } from "@/config/site"
+import { isLocale, locales, defaultLocale } from "@/lib/i18n/config"
+import { getDictionaryFor } from "@/lib/i18n/get-dictionary"
 
-export const alt = `${siteConfig.name} — ${siteConfig.tagline}`
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-export default function OpengraphImage() {
+/**
+ * Without this the `[lang]` segment has no known values at build time and the
+ * image route is server-rendered on demand; both locales' images are static.
+ */
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
+}
+
+/**
+ * `alt` is a static export, so it cannot read the route's locale — root params
+ * are unavailable in this position. It uses the English tagline, which is the
+ * sensible fallback for the one field that cannot vary; the image's own
+ * headline below is localized.
+ */
+export const alt = `${siteConfig.name} — ${siteConfig.tagline.en}`
+
+/**
+ * An opengraph-image is a Route Handler, where `next/root-params` is not
+ * supported in this Next version, so the locale comes from `params` and the
+ * dictionary from the synchronous, client-safe `getDictionaryFor`.
+ */
+export default async function OpengraphImage({
+  params,
+}: {
+  params: Promise<{ lang: string }>
+}) {
+  const { lang } = await params
+  const dict = getDictionaryFor(isLocale(lang) ? lang : defaultLocale)
   return new ImageResponse(
     (
       <div
@@ -41,7 +69,7 @@ export default function OpengraphImage() {
               display: "flex",
             }}
           >
-            Environmental consulting, biodiversity & tree cadastre
+            {dict.meta.ogImageHeadline}
           </div>
         </div>
 

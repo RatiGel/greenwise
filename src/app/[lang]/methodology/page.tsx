@@ -2,27 +2,35 @@ import type { Metadata } from "next"
 import { FileCheck2 } from "lucide-react"
 
 import { getMethodologySteps } from "@/content/methodology"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { PageHeader } from "@/components/sections/page-header"
 import { CtaBand } from "@/components/sections/cta-band"
 import { Photo } from "@/components/ui/photo"
 import { Reveal } from "@/components/ui/reveal"
 
-export const metadata: Metadata = {
-  title: "მეთოდოლოგია",
-  description:
-    "GREENWISE-ის სამუშაო პროცესი: პირველადი კონსულტაცია, ტერიტორიის შეფასება, საველე სამუშაოები და დოკუმენტაციის მომზადება — ვადებითა და შედეგებით.",
-  alternates: { canonical: "/methodology" },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const dict = await getDictionary()
+
+  return {
+    title: dict.methodology.metaTitle,
+    description: dict.methodology.metaDescription,
+    alternates: { canonical: localizedPath("/methodology", locale) },
+  }
 }
 
-export default function MethodologyPage() {
+export default async function MethodologyPage() {
   const steps = getMethodologySteps()
+  const locale = await getLocale()
+  const dict = await getDictionary()
 
   return (
     <>
       <PageHeader
-        eyebrow="მეთოდოლოგია"
-        title="როგორ მუშაობს პროცესი"
-        description="ოთხი ეტაპი, თითოეული ფიქსირებული ვადითა და კონკრეტული შედეგით. არანაირი ბუნდოვანება იმაზე, თუ სად დგას პროექტი."
+        eyebrow={dict.methodology.eyebrow}
+        title={dict.methodology.title}
+        description={dict.methodology.description}
       />
 
       <section className="section-y band-dark">
@@ -50,15 +58,15 @@ export default function MethodologyPage() {
                   <div className="transition-transform duration-400 ease-out-quint motion-safe:group-hover/card:translate-x-1">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <h2 className="text-xl font-semibold text-white sm:text-2xl">
-                        {step.title}
+                        {step.title[locale]}
                       </h2>
                       <span className="rounded-full bg-green-500/15 px-3 py-1 text-xs font-medium text-green-500">
-                        {step.duration}
+                        {step.duration[locale]}
                       </span>
                     </div>
 
                     <p className="prose-measure mt-4 text-white/75">
-                      {step.description}
+                      {step.description[locale]}
                     </p>
                   </div>
 
@@ -68,8 +76,10 @@ export default function MethodologyPage() {
                       className="mt-0.5 size-4 shrink-0 text-green-500"
                     />
                     <p className="text-sm text-green-500">
-                      <span className="font-medium">შედეგი: </span>
-                      {step.deliverable}
+                      <span className="font-medium">
+                        {dict.methodology.deliverableLabel}
+                      </span>
+                      {step.deliverable[locale]}
                     </p>
                   </div>
                 </div>
@@ -83,19 +93,17 @@ export default function MethodologyPage() {
         <div className="container-page">
           <Reveal className="grid items-center gap-10 md:grid-cols-2 md:gap-14">
             <Photo
-              alt="საველე მონაცემების აღრიცხვა GIS ბაზაში"
+              alt={dict.methodology.gisPhotoAlt}
               ratio="16 / 11"
               seed={11}
               sizes="(min-width: 768px) 46vw, 100vw"
             />
             <div>
               <h2 className="heading-lg text-white">
-                მონაცემი, რომელიც პროექტს გადააჭარბებს
+                {dict.methodology.gisTitle}
               </h2>
               <p className="prose-measure mt-5 text-[1.0625rem] text-white/75">
-                საველე ეტაპზე შეგროვებულ მონაცემს GIS ფორმატში იღებთ — ის
-                დოკუმენტის ჩაბარების შემდეგაც რჩება თქვენთან და გამოსადეგია
-                შემდეგი ეტაპების დასაგეგმად.
+                {dict.methodology.gisBody}
               </p>
             </div>
           </Reveal>
@@ -103,8 +111,8 @@ export default function MethodologyPage() {
       </section>
 
       <CtaBand
-        title="დაიწყეთ პირველი ეტაპით"
-        description="პირველადი კონსულტაცია უფასოა და გეუბნებათ ზუსტად, რომელი კვლევაა სავალდებულო თქვენი ნებართვისთვის."
+        title={dict.methodology.ctaTitle}
+        description={dict.methodology.ctaDescription}
       />
     </>
   )

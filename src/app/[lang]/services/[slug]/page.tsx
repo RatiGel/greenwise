@@ -6,6 +6,8 @@ import { ArrowRight, Check } from "lucide-react"
 import { getServiceBySlug, getServices } from "@/content/services"
 import { getMethodologySteps } from "@/content/methodology"
 import { siteConfig } from "@/config/site"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { ServiceIcon } from "@/components/service-icon"
 import { PageHeader } from "@/components/sections/page-header"
 import { CtaBand } from "@/components/sections/cta-band"
@@ -30,14 +32,17 @@ export async function generateMetadata({
 
   if (!service) return {}
 
+  const locale = await getLocale()
+  const path = localizedPath(`/services/${service.slug}`, locale)
+
   return {
-    title: service.title,
-    description: service.shortDescription,
-    alternates: { canonical: `/services/${service.slug}` },
+    title: service.title[locale],
+    description: service.shortDescription[locale],
+    alternates: { canonical: path },
     openGraph: {
-      title: `${service.title} | ${siteConfig.name}`,
-      description: service.shortDescription,
-      url: `${siteConfig.url}/services/${service.slug}`,
+      title: `${service.title[locale]} | ${siteConfig.name}`,
+      description: service.shortDescription[locale],
+      url: `${siteConfig.url}${path}`,
     },
   }
 }
@@ -50,28 +55,30 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   const otherServices = getServices().filter((item) => item.slug !== service.slug)
   const steps = getMethodologySteps()
+  const locale = await getLocale()
+  const dict = await getDictionary()
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: service.title,
-    description: service.shortDescription,
-    serviceType: service.title,
+    name: service.title[locale],
+    description: service.shortDescription[locale],
+    serviceType: service.title[locale],
     provider: {
       "@type": "ProfessionalService",
       name: siteConfig.name,
       url: siteConfig.url,
     },
     areaServed: { "@type": "Country", name: "Georgia" },
-    url: `${siteConfig.url}/services/${service.slug}`,
+    url: `${siteConfig.url}${localizedPath(`/services/${service.slug}`, locale)}`,
   }
 
   return (
     <>
       <PageHeader
-        eyebrow="სერვისი"
-        title={service.title}
-        description={service.shortDescription}
+        eyebrow={dict.services.detailEyebrow}
+        title={service.title[locale]}
+        description={service.shortDescription[locale]}
       />
 
       <section className="section-y band-dark">
@@ -80,7 +87,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <Reveal>
               <Photo
                 src={`/photos/service-${service.slug}.jpg`}
-                alt={service.title}
+                alt={service.title[locale]}
                 ratio="16 / 9"
                 priority
                 seed={service.order + 2}
@@ -90,19 +97,19 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 <ServiceIcon name={service.icon} className="size-6" />
               </span>
               <h2 className="mt-6 text-2xl font-semibold text-white">
-                აღწერა
+                {dict.sections.description}
               </h2>
               <p className="prose-measure mt-4 text-[1.0625rem] text-white/75">
-                {service.description}
+                {service.description[locale]}
               </p>
             </Reveal>
 
             <Reveal delay={100} className="mt-12">
               <h2 className="text-2xl font-semibold text-white">
-                რას მოიცავს
+                {dict.sections.whatItCovers}
               </h2>
               <ul className="mt-6 grid gap-4 sm:grid-cols-2">
-                {service.covers.map((item) => (
+                {service.covers[locale].map((item) => (
                   <li
                     key={item}
                     className="flex gap-3 rounded-xl border border-white/12 bg-teal-700/50 p-5 text-sm leading-relaxed text-white/75"
@@ -116,10 +123,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
             <Reveal delay={140} className="mt-12">
               <h2 className="text-2xl font-semibold text-white">
-                რატომ გჭირდებათ
+                {dict.sections.whyNeeded}
               </h2>
               <ul className="mt-6 flex flex-col gap-4">
-                {service.whyNeeded.map((item, index) => (
+                {service.whyNeeded[locale].map((item, index) => (
                   <li
                     key={item}
                     className="flex gap-4 rounded-xl border border-green-500/30 bg-green-500/10 p-5 transition-colors duration-300 hover:bg-green-500/15"
@@ -139,10 +146,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
             <Reveal className="rounded-2xl border border-white/12 bg-teal-700/50 p-6">
               <h2 className="text-base font-semibold text-white">
-                ვისთვის არის
+                {dict.sections.audience}
               </h2>
               <ul className="mt-4 flex flex-wrap gap-2">
-                {service.audience.map((item) => (
+                {service.audience[locale].map((item) => (
                   <li key={item}>
                     <Badge variant="secondary">{item}</Badge>
                   </li>
@@ -150,7 +157,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
               </ul>
 
               <h2 className="mt-7 text-base font-semibold text-white">
-                როგორ მიმდინარეობს
+                {dict.sections.howItWorks}
               </h2>
               <ol className="mt-4 flex flex-col gap-3">
                 {steps.map((step) => (
@@ -158,14 +165,14 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     <span className="font-display grid size-6 shrink-0 place-items-center rounded-full bg-green-500/15 text-xs font-bold text-green-500">
                       {step.step}
                     </span>
-                    <span className="text-white/75">{step.title}</span>
+                    <span className="text-white/75">{step.title[locale]}</span>
                   </li>
                 ))}
               </ol>
 
               <Button asChild className="group mt-7 h-12 w-full">
-                <Link href="/contact">
-                  ფასის მოთხოვნა
+                <Link href={localizedPath("/contact", locale)}>
+                  {dict.cta.requestQuote}
                   <ArrowRight
                     aria-hidden
                     className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
@@ -176,16 +183,16 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
             <Reveal delay={100} className="rounded-2xl border border-white/12 bg-teal-700/50 p-6">
               <h2 className="text-base font-semibold text-white">
-                სხვა სერვისები
+                {dict.sections.otherServices}
               </h2>
               <ul className="mt-4 flex flex-col gap-1">
                 {otherServices.map((item) => (
                   <li key={item.slug}>
                     <Link
-                      href={`/services/${item.slug}`}
+                      href={localizedPath(`/services/${item.slug}`, locale)}
                       className="group flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-white/75 transition-colors duration-200 hover:bg-green-500/15 hover:text-green-500"
                     >
-                      {item.title}
+                      {item.title[locale]}
                       <ArrowRight
                         aria-hidden
                         className="size-4 shrink-0 text-green-500 transition-transform duration-300 group-hover:translate-x-0.5"

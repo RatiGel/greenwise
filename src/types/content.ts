@@ -29,9 +29,9 @@ export interface Service {
   title: Localized<string>
   shortDescription: Localized<string>
   description: Localized<string>
-  /** "რას მოიცავს" — concrete deliverables. */
+  /** "What it covers" — concrete deliverables. */
   covers: Localized<string[]>
-  /** "რატომ გჭირდებათ" — client-facing reasons. */
+  /** "Why you need it" — client-facing reasons. */
   whyNeeded: Localized<string[]>
   /** Lucide icon name, resolved through the icon map in the UI layer. */
   icon: "leaf" | "trees" | "microscope" | "sprout"

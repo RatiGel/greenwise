@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { Hero } from "@/components/sections/hero"
 import { WhyChoose } from "@/components/sections/why-choose"
 import { AboutIntro } from "@/components/sections/about-intro"
@@ -9,11 +11,15 @@ import { MethodologyTeaser } from "@/components/sections/methodology-teaser"
 import { ClientStrip } from "@/components/sections/client-strip"
 import { CtaBand } from "@/components/sections/cta-band"
 
-export const metadata: Metadata = {
-  title: "გარემოსდაცვითი კონსალტინგი — ბიომრავალფეროვნება, დენდროლოგია, ტყის აღდგენა",
-  description:
-    "GREENWISE ამზადებს ბიომრავალფეროვნების შეფასებას, ხე-მცენარეთა ინვენტარიზაციასა და კადასტრს, დენდროლოგიურ ექსპერტიზასა და ტყის აღდგენის პროექტებს. საველე მონაცემებზე დაფუძნებული დოკუმენტაცია გზშ-სა და ნებართვისთვის.",
-  alternates: { canonical: "/" },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const dict = await getDictionary()
+
+  return {
+    title: dict.meta.homeTitle,
+    description: dict.meta.homeDescription,
+    alternates: { canonical: localizedPath("/", locale) },
+  }
 }
 
 export default function HomePage() {

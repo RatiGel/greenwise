@@ -259,6 +259,7 @@ export const en: Dictionary = {
       "ecological expertise",
     ],
     addressLocality: "Tbilisi",
+    ogImageHeadline: "Environmental consulting, biodiversity & tree cadastre",
   },
   error: {
     notFoundTitle: "Page not found",
