@@ -2,6 +2,8 @@ import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
 import { getServices } from "@/content/services"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { ServiceIcon } from "@/components/service-icon"
 import { Photo } from "@/components/ui/photo"
 import { Reveal } from "@/components/ui/reveal"
@@ -15,24 +17,26 @@ import { SectionHeading } from "@/components/layout/section"
  * All four services are shown at once — the set is small enough that any
  * filtering would add a step without removing one.
  */
-export function ServiceCards() {
+export async function ServiceCards() {
   const services = getServices()
+  const locale = await getLocale()
+  const dict = await getDictionary()
 
   return (
     <section className="section-y band-dark">
       <div className="container-page">
         <SectionHeading
-          eyebrow="სერვისები"
-          title="ოთხი მიმართულება, ერთი პასუხისმგებელი გუნდი"
-          accent="ერთი პასუხისმგებელი გუნდი"
-          description="თითოეული მომსახურება დამოუკიდებლადაც მუშაობს და კომპლექსურადაც — იმის მიხედვით, რას ითხოვს თქვენი პროექტის ნებართვა."
+          eyebrow={dict.sections.servicesHeading}
+          title={dict.home.servicesTitle}
+          accent={dict.home.servicesAccent}
+          description={dict.home.servicesDescription}
         />
 
         <ul className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => (
             <Reveal as="li" key={service.slug} delay={index * 90}>
               <Link
-                href={`/services/${service.slug}`}
+                href={localizedPath(`/services/${service.slug}`, locale)}
                 className="group photo-card press block h-full min-h-[26rem] transition-[transform,box-shadow] duration-500 ease-out-quint hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/40"
               >
                 <Photo
@@ -56,13 +60,13 @@ export function ServiceCards() {
                     leaves it still for anyone who asked for reduced motion. */}
                 <div className="relative flex h-full flex-col justify-end p-6 transition-transform duration-500 ease-out-quint motion-safe:group-hover:-translate-y-2">
                   <h3 className="text-xl leading-snug font-semibold text-white transition-colors duration-300 group-hover:text-green-500">
-                    {service.title}
+                    {service.title[locale]}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-white/80">
-                    {service.shortDescription}
+                    {service.shortDescription[locale]}
                   </p>
                   <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-green-500">
-                    დეტალურად
+                    {dict.cta.viewDetails}
                     <ArrowUpRight
                       aria-hidden
                       className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

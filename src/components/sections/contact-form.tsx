@@ -72,8 +72,11 @@ export function ContactForm() {
   )
 
   const projectTypes = React.useMemo(
-    () => [...services.map((service) => service.title), t.projectTypeOther],
-    [t.projectTypeOther]
+    () => [
+      ...services.map((service) => service.title[locale]),
+      t.projectTypeOther,
+    ],
+    [locale, t.projectTypeOther]
   )
 
   const contactSchema = React.useMemo(() => buildContactSchema(t), [t])

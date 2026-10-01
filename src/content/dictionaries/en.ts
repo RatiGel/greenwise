@@ -105,6 +105,7 @@ export const en: Dictionary = {
     servicesHeading: "Services",
     companyHeading: "Company",
     contactHeading: "Contact",
+    taxId: "Reg. no. 4•••••••••",
   },
   home: {
     heroTitle: "Environmental documentation that speeds up your permit",

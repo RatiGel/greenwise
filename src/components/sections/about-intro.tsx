@@ -1,4 +1,6 @@
 import { mission, stats } from "@/content/about"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { CountUp } from "@/components/ui/count-up"
 import { Photo } from "@/components/ui/photo"
 import { PillCta } from "@/components/ui/pill-cta"
@@ -9,7 +11,10 @@ import { SectionLabel } from "@/components/layout/section"
  * Light band: headline and copy at left, photo plus stats at right, with the
  * mission/vision pair beneath — the reference's "Who We Are" section.
  */
-export function AboutIntro() {
+export async function AboutIntro() {
+  const locale = await getLocale()
+  const dict = await getDictionary()
+
   return (
     <section className="section-y-lg band-light">
       <div className="container-page">
@@ -17,19 +22,23 @@ export function AboutIntro() {
           <div>
             <Reveal>
               <SectionLabel className="text-on-light-muted">
-                ჩვენ შესახებ
+                {dict.home.aboutEyebrow}
               </SectionLabel>
               <h2 className="heading-lg mt-5 text-on-light">
-                {mission.heading}
+                {mission.heading[locale]}
               </h2>
               <p className="prose-measure mt-6 text-on-light-muted">
-                {mission.body}
+                {mission.body[locale]}
               </p>
             </Reveal>
 
             <Reveal delay={160}>
-              <PillCta href="/about" tone="onLight" className="mt-9">
-                კომპანიის შესახებ
+              <PillCta
+                href={localizedPath("/about", locale)}
+                tone="onLight"
+                className="mt-9"
+              >
+                {dict.home.aboutCta}
               </PillCta>
             </Reveal>
           </div>
@@ -38,7 +47,7 @@ export function AboutIntro() {
             <Reveal delay={80}>
               <Photo
                 src="/photos/about-team.jpg"
-                alt="GREENWISE-ის გუნდი საველე სამუშაოზე"
+                alt={dict.home.aboutTeamPhotoAlt}
                 ratio="4 / 5"
                 seed={2}
                 sizes="(min-width: 640px) 26vw, 100vw"
@@ -47,19 +56,19 @@ export function AboutIntro() {
 
             <Reveal delay={160}>
               <h3 className="text-2xl leading-snug font-semibold text-on-light">
-                13 წელი საველე გამოცდილება
+                {dict.home.aboutExperienceHeading}
               </h3>
               <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line-light pt-7">
                 {stats.slice(0, 4).map((stat) => (
-                  <div key={stat.label}>
-                    <dt className="sr-only">{stat.label}</dt>
+                  <div key={stat.label[locale]}>
+                    <dt className="sr-only">{stat.label[locale]}</dt>
                     <dd>
                       <CountUp
-                        value={stat.value}
+                        value={stat.value[locale]}
                         className="block text-3xl font-bold text-on-light"
                       />
                       <span className="mt-1.5 block text-sm leading-snug text-on-light-muted">
-                        {stat.label}
+                        {stat.label[locale]}
                       </span>
                     </dd>
                   </div>

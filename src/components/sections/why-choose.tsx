@@ -2,51 +2,54 @@ import Link from "next/link"
 import { ArrowRight, ClipboardCheck, Gauge, ShieldCheck } from "lucide-react"
 
 import { cn } from "cn"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { Reveal } from "@/components/ui/reveal"
 import { SectionBackdrop } from "@/components/ui/section-backdrop"
 import { SectionHeading } from "@/components/layout/section"
 
-const reasons = [
-  {
-    icon: ShieldCheck,
-    title: "მარეგულირებლის ფორმატში",
-    description:
-      "დოკუმენტს ვამზადებთ იმ სტრუქტურით, რომელსაც უწყება ელოდება — ამიტომ კვლევა პირველივე წარდგენისას გადის.",
-    href: "/methodology",
-    linkLabel: "როგორ ვმუშაობთ",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "შემოწმებადი საველე მონაცემი",
-    description:
-      "თითოეული დასკვნის უკან დგას GPS-კოორდინატი, ფოტოფიქსაცია და GIS ბაზა, რომელსაც თქვენც იღებთ.",
-    href: "/services/tree-inventory",
-    linkLabel: "ინვენტარიზაცია",
-  },
-  {
-    icon: Gauge,
-    title: "ფიქსირებული ვადა და ფასი",
-    description:
-      "სამუშაო ფარგლების შეთანხმების შემდეგ ვადა და ღირებულება აღარ იცვლება.",
-    href: "/contact",
-    linkLabel: "შეთავაზების მიღება",
-  },
-]
 
 /**
  * Three cards where the last is filled bright green — the reference's way of
  * breaking an otherwise uniform row.
  */
-export function WhyChoose() {
+export async function WhyChoose() {
+  const locale = await getLocale()
+  const dict = await getDictionary()
+
+  const reasons = [
+    {
+      icon: ShieldCheck,
+      title: dict.home.reasonRegulatorTitle,
+      description: dict.home.reasonRegulatorBody,
+      href: localizedPath("/methodology", locale),
+      linkLabel: dict.home.reasonRegulatorLink,
+    },
+    {
+      icon: ClipboardCheck,
+      title: dict.home.reasonDataTitle,
+      description: dict.home.reasonDataBody,
+      href: localizedPath("/services/tree-inventory", locale),
+      linkLabel: dict.home.reasonDataLink,
+    },
+    {
+      icon: Gauge,
+      title: dict.home.reasonPriceTitle,
+      description: dict.home.reasonPriceBody,
+      href: localizedPath("/contact", locale),
+      linkLabel: dict.home.reasonPriceLink,
+    },
+  ]
+
   return (
     <section className="section-y band-dark relative isolate">
       <SectionBackdrop src="/photos/backdrop-why.jpg" seed={7} />
       <div className="container-page">
         <SectionHeading
-          eyebrow="რატომ GREENWISE"
-          title="კვლევა, რომელიც ნებართვას აჩქარებს"
-          accent="ნებართვას აჩქარებს"
-          description="გარემოსდაცვითი დოკუმენტი ორ რამეზე ჩერდება: არასრულ მონაცემზე და არასწორ ფორმატზე. ორივეს თავიდან აცილება ჩვენი სამუშაოა."
+          eyebrow={dict.home.whyEyebrow}
+          title={dict.home.whyTitle}
+          accent={dict.home.whyAccent}
+          description={dict.home.whyDescription}
         />
 
         <ul className="mt-16 grid gap-5 md:grid-cols-3">

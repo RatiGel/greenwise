@@ -107,6 +107,7 @@ export const ka = {
     servicesHeading: "სერვისები",
     companyHeading: "კომპანია",
     contactHeading: "კონტაქტი",
+    taxId: "ს/ნ 4•••••••••",
   },
   home: {
     heroTitle: "გარემოსდაცვითი დოკუმენტაცია, რომელიც ნებართვას აჩქარებს",

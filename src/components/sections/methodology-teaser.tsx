@@ -1,4 +1,6 @@
 import { getMethodologySteps } from "@/content/methodology"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { PillCta } from "@/components/ui/pill-cta"
 import { Reveal } from "@/components/ui/reveal"
 import { SectionHeading } from "@/components/layout/section"
@@ -7,23 +9,29 @@ import { SectionHeading } from "@/components/layout/section"
  * Process steps. Numbering is information here — the stages run in order and
  * each one's deliverable is the next one's input.
  */
-export function MethodologyTeaser() {
+export async function MethodologyTeaser() {
   const steps = getMethodologySteps()
+  const locale = await getLocale()
+  const dict = await getDictionary()
 
   return (
     <section className="section-y band-light">
       <div className="container-page">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            eyebrow="მეთოდოლოგია"
-            title="გამჭვირვალე პროცესი — პირველი ზარიდან დოკუმენტამდე"
-            accent="პირველი ზარიდან დოკუმენტამდე"
+            eyebrow={dict.home.methodologyEyebrow}
+            title={dict.home.methodologyTitle}
+            accent={dict.home.methodologyAccent}
             tone="light"
             className="flex-1"
           />
           <Reveal delay={120}>
-            <PillCta href="/methodology" tone="onLight" className="shrink-0">
-              სრული პროცესი
+            <PillCta
+              href={localizedPath("/methodology", locale)}
+              tone="onLight"
+              className="shrink-0"
+            >
+              {dict.cta.fullProcess}
             </PillCta>
           </Reveal>
         </div>
@@ -41,17 +49,17 @@ export function MethodologyTeaser() {
                 />
               </div>
               <h3 className="mt-5 text-lg font-semibold text-on-light">
-                {step.title}
+                {step.title[locale]}
               </h3>
               <p className="mt-3 leading-relaxed text-on-light-muted">
-                {step.description}
+                {step.description[locale]}
               </p>
               <p className="mt-5 text-sm text-on-light-muted">
                 <span className="font-medium text-green-600">
-                  {step.duration}
+                  {step.duration[locale]}
                 </span>
                 {" · "}
-                {step.deliverable}
+                {step.deliverable[locale]}
               </p>
             </Reveal>
           ))}

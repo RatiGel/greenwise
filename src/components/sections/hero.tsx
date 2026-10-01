@@ -1,6 +1,7 @@
 import { stats } from "@/content/about"
 import { siteConfig } from "@/config/site"
-import { getLocale } from "@/lib/i18n/dictionaries"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { CountUp } from "@/components/ui/count-up"
 import { Photo } from "@/components/ui/photo"
 import { PillCta } from "@/components/ui/pill-cta"
@@ -13,6 +14,17 @@ import { buildWhatsAppQuickUrl } from "@/lib/whatsapp"
  */
 export async function Hero() {
   const locale = await getLocale()
+  const dict = await getDictionary()
+
+  // The accent phrase is highlighted in place, so the title is split around
+  // it rather than stored as two separate strings.
+  const accentAt = dict.home.heroTitle.indexOf(dict.home.heroAccent)
+  const heroBefore =
+    accentAt === -1 ? dict.home.heroTitle : dict.home.heroTitle.slice(0, accentAt)
+  const heroAfter =
+    accentAt === -1
+      ? ""
+      : dict.home.heroTitle.slice(accentAt + dict.home.heroAccent.length)
 
   return (
     <section className="relative isolate overflow-hidden band-dark">
@@ -35,22 +47,23 @@ export async function Hero() {
         <div className="max-w-4xl">
           <Reveal>
             <h1 className="heading-xl text-white">
-              გარემოსდაცვითი დოკუმენტაცია, რომელიც{" "}
-              <span className="text-green-500">ნებართვას აჩქარებს</span>
+              {heroBefore}
+              <span className="text-green-500">{dict.home.heroAccent}</span>
+              {heroAfter}
             </h1>
           </Reveal>
 
           <Reveal delay={120}>
             <p className="prose-measure mt-7 text-lg text-white/85">
-              ბიომრავალფეროვნების შეფასება, ხე-მცენარეთა ინვენტარიზაცია,
-              დენდროლოგიური ექსპერტიზა და ტყის აღდგენა — საველე მონაცემებზე
-              დაფუძნებული კვლევები.
+              {dict.home.heroBody}
             </p>
           </Reveal>
 
           <Reveal delay={200}>
             <div className="mt-10 flex flex-wrap gap-3">
-              <PillCta href="/contact">უფასო კონსულტაცია</PillCta>
+              <PillCta href={localizedPath("/contact", locale)}>
+                {dict.cta.freeConsult}
+              </PillCta>
               <PillCta href={buildWhatsAppQuickUrl(locale)} tone="onDark" external>
                 WhatsApp
               </PillCta>
@@ -62,15 +75,15 @@ export async function Hero() {
         <Reveal delay={300}>
           <dl className="mt-14 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-white/20 pt-8 sm:grid-cols-4">
             {stats.map((stat) => (
-              <div key={stat.label}>
-                <dt className="sr-only">{stat.label}</dt>
+              <div key={stat.label[locale]}>
+                <dt className="sr-only">{stat.label[locale]}</dt>
                 <dd>
                   <CountUp
-                    value={stat.value}
+                    value={stat.value[locale]}
                     className="block text-3xl font-bold text-green-500 sm:text-4xl"
                   />
                   <span className="mt-2 block text-sm leading-snug text-white/75">
-                    {stat.label}
+                    {stat.label[locale]}
                   </span>
                 </dd>
               </div>
