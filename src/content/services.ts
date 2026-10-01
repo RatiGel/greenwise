@@ -152,7 +152,7 @@ export const services: Service[] = [
         "A hazardous tree in a public space is a direct liability risk",
         "A reasoned report strengthens your position in the permitting process",
         "Protects valuable trees from damage during construction",
-        "Lets the municipality prioritise its budget planning",
+        "Lets the municipality plan its budget by priority",
       ],
     },
     icon: "microscope",

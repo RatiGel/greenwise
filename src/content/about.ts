@@ -92,19 +92,19 @@ export const milestones: Milestone[] = [
 
 export const stats = [
   {
-    value: "13+",
+    value: { ka: "13+", en: "13+" },
     label: { ka: "წლიანი გამოცდილება", en: "years of experience" },
   },
   {
-    value: "240+",
+    value: { ka: "240+", en: "240+" },
     label: { ka: "დასრულებული პროექტი", en: "completed projects" },
   },
   {
-    value: "60 000+",
+    value: { ka: "60 000+", en: "60,000+" },
     label: { ka: "აღრიცხული ხე-მცენარე", en: "trees inventoried" },
   },
   {
-    value: "40+",
+    value: { ka: "40+", en: "40+" },
     label: { ka: "მუდმივი დამკვეთი", en: "recurring clients" },
   },
 ]
