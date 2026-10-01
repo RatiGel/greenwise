@@ -5,8 +5,11 @@ import { siteConfig } from "@/config/site"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Toaster } from "@/components/ui/sonner"
+import { locales } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
+import { LocaleProvider } from "@/lib/i18n/locale-context"
 
-import "./globals.css"
+import "../globals.css"
 
 const notoSansGeorgian = Noto_Sans_Georgian({
   subsets: ["georgian", "latin"],
@@ -95,30 +98,43 @@ const organizationJsonLd = {
   sameAs: [siteConfig.social.facebook, siteConfig.social.linkedin],
 }
 
-export default function RootLayout({
+export async function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
+}
+
+export default async function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: LayoutProps<"/[lang]">) {
+  const locale = await getLocale()
+  const dictionary = await getDictionary()
+
   return (
-    <html lang={siteConfig.lang} className={`${notoSansGeorgian.variable} ${manrope.variable} h-full`}>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      className={`${notoSansGeorgian.variable} ${manrope.variable} h-full`}
+    >
       <body className="flex min-h-full flex-col bg-teal-900">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-green-500 focus:px-4 focus:py-2 focus:text-teal-900"
-        >
-          გადასვლა მთავარ კონტენტზე
-        </a>
-        <Header />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <Toaster position="top-center" richColors />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
-        />
+        <LocaleProvider locale={locale} dictionary={dictionary}>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-green-500 focus:px-4 focus:py-2 focus:text-teal-900"
+          >
+            გადასვლა მთავარ კონტენტზე
+          </a>
+          <Header />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <Toaster position="top-center" richColors />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(organizationJsonLd),
+            }}
+          />
+        </LocaleProvider>
       </body>
     </html>
   )
