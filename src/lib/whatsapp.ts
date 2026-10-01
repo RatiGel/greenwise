@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site"
 import type { Locale } from "@/lib/i18n/config"
-import { getDictionaryFor } from "@/lib/i18n/dictionaries"
+import { getDictionaryFor } from "@/lib/i18n/get-dictionary"
 
 export interface WhatsAppEnquiry {
   name: string

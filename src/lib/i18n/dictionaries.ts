@@ -2,15 +2,14 @@ import { lang } from "next/root-params"
 import { notFound } from "next/navigation"
 
 import { isLocale, type Locale } from "@/lib/i18n/config"
-import { ka, type Dictionary } from "@/content/dictionaries/ka"
-import { en } from "@/content/dictionaries/en"
+import { dictionaries, getDictionaryFor } from "@/lib/i18n/get-dictionary"
+import type { Dictionary } from "@/content/dictionaries/ka"
 
-const dictionaries: Record<Locale, Dictionary> = { ka, en }
-
-/** Synchronous lookup. Safe anywhere, including Client Components. */
-export function getDictionaryFor(locale: Locale): Dictionary {
-  return dictionaries[locale]
-}
+/**
+ * SERVER-ONLY MODULE. It depends on `next/root-params`, so nothing reachable
+ * from a `"use client"` module may import from here. Client-reachable code
+ * imports `getDictionaryFor` from `@/lib/i18n/get-dictionary` instead.
+ */
 
 /**
  * Reads the active locale from the route.
@@ -30,5 +29,8 @@ export async function getLocale(): Promise<Locale> {
   if (!locale || !isLocale(locale)) notFound()
   return locale
 }
+
+/** Re-exported for server-side convenience. */
+export { getDictionaryFor }
 
 export type { Dictionary }

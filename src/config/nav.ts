@@ -1,6 +1,6 @@
 import { getServices } from "@/content/services"
 import { localizedPath, type Locale } from "@/lib/i18n/config"
-import { getDictionaryFor } from "@/lib/i18n/dictionaries"
+import { getDictionaryFor } from "@/lib/i18n/get-dictionary"
 
 export interface NavItem {
   href: string
