@@ -12,6 +12,7 @@ export const ka = {
     openMenu: "მენიუს გახსნა",
     menu: "მენიუ",
     skipToContent: "გადასვლა მთავარ კონტენტზე",
+    homePageLabel: "მთავარი გვერდი",
   },
   language: {
     switchLabel: "ენის შეცვლა",
@@ -20,6 +21,7 @@ export const ka = {
   },
   cta: {
     consult: "კონსულტაცია",
+    freeConsult: "უფასო კონსულტაცია",
     allServices: "ყველა სერვისი",
     allClients: "ყველა კლიენტი",
     learnMore: "დაწვრილებით",
@@ -27,8 +29,10 @@ export const ka = {
     writeWhatsApp: "მოგვწერეთ WhatsApp-ზე",
     whatsappContact: "WhatsApp-ით დაკავშირება",
     requestConsultation: "კონსულტაციის მოთხოვნა",
+    requestQuote: "ფასის მოთხოვნა",
     fullProcess: "სრული პროცესი",
     detailPage: "დეტალური გვერდი",
+    viewDetails: "დეტალურად",
   },
   form: {
     name: "სახელი",

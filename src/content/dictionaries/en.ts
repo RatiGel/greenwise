@@ -14,10 +14,12 @@ export const en: Dictionary = {
     openMenu: "Open menu",
     menu: "Menu",
     skipToContent: "Skip to main content",
+    homePageLabel: "home page",
   },
   language: { switchLabel: "Change language", ka: "ქართული", en: "English" },
   cta: {
     consult: "Get a consultation",
+    freeConsult: "Free consultation",
     allServices: "All services",
     allClients: "All clients",
     learnMore: "Learn more",
@@ -25,8 +27,10 @@ export const en: Dictionary = {
     writeWhatsApp: "Message us on WhatsApp",
     whatsappContact: "Message us on WhatsApp",
     requestConsultation: "Request a consultation",
+    requestQuote: "Request a quote",
     fullProcess: "Full process",
     detailPage: "Detail page",
+    viewDetails: "View details",
   },
   form: {
     name: "Name",
