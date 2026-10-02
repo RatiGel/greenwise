@@ -68,6 +68,21 @@ for (const [p, want] of [["/", "ka"], ["/en", "en"]]) {
                      : bad(`${p} → lang="${m?.[1] ?? "missing"}", expected "${want}"`)
 }
 
+console.log("\nAn unknown path serves the branded Georgian 404:")
+{
+  const p = "/this-page-does-not-exist"
+  const res = await fetch(`${BASE}${p}`)
+  const html = await res.text()
+  if (res.status !== 404) {
+    bad(`${p} → ${res.status}, expected 404`)
+  } else {
+    ok(`${p} → 404`)
+    GEORGIAN.test(html)
+      ? ok(`${p} renders Georgian text (branded page, not Next's default)`)
+      : bad(`${p} → 404 but no Georgian text found (bare Next default?)`)
+  }
+}
+
 console.log(
   failures.length === 0
     ? "\nAll i18n checks passed."

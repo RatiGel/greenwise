@@ -39,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       languages: {
         ka: absolute(path, "ka"),
         en: absolute(path, "en"),
+        "x-default": absolute(path, "ka"),
       },
     }
 
