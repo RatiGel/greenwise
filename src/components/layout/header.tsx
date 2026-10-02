@@ -70,10 +70,21 @@ export function Header() {
     >
       <ScrollProgress />
 
-      <div className="container-page flex h-20 items-center justify-between gap-6">
+      {/*
+       * The header row is allowed past `container-page`'s 1200px cap. Georgian
+       * nav labels are much longer than their English counterparts
+       * ("მეთოდოლოგია" vs "Methodology") and did not fit beside the language
+       * switcher and the CTA within 1200px. Page content keeps the narrower
+       * measure; only this row widens.
+       */}
+      <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between gap-6 px-5 sm:px-6 lg:px-8">
         <Logo />
 
-        <nav aria-label={dict.nav.mainNavLabel} className="hidden min-w-0 lg:block">
+        {/*
+         * The inline nav appears at xl rather than lg: Georgian labels need the
+         * extra width, and below it the sheet carries the same navigation.
+         */}
+        <nav aria-label={dict.nav.mainNavLabel} className="hidden min-w-0 xl:block">
           <ul className="flex items-center gap-0.5">
             {mainNav.map((item) => (
               <li key={item.href} className="group relative">
@@ -117,17 +128,13 @@ export function Header() {
           </ul>
         </nav>
 
+        {/*
+         * The phone link used to sit here. Georgian nav labels plus the
+         * language switcher already fill the row at every width the container
+         * allows, and the number overlapped them. It remains one tap away in
+         * the sheet below, and on the footer and contact page.
+         */}
         <div className="flex shrink-0 items-center gap-2">
-          <a
-            href={`tel:${siteConfig.contact.phoneHref}`}
-            className="hidden shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap text-white/80 transition-colors hover:text-green-500 2xl:inline-flex"
-          >
-            <Phone aria-hidden className="size-4" />
-            <span dir="ltr" className="font-display font-semibold whitespace-nowrap">
-              {siteConfig.contact.phone}
-            </span>
-          </a>
-
           <LanguageSwitcher className="hidden sm:flex" />
 
           <PillCta href={contactHref} className="hidden sm:inline-flex">
@@ -139,7 +146,7 @@ export function Header() {
               <Button
                 variant="outline"
                 size="icon"
-                className="size-11 border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white lg:hidden"
+                className="size-11 border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white xl:hidden"
                 aria-label={dict.nav.openMenu}
               >
                 <Menu className="size-5" />
