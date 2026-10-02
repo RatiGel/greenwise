@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { siteConfig } from "@/config/site"
 import { localizedPath } from "@/lib/i18n/config"
 import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { Hero } from "@/components/sections/hero"
@@ -25,6 +26,25 @@ export async function generateMetadata(): Promise<Metadata> {
         en: localizedPath("/", "en"),
         "x-default": localizedPath("/", "ka"),
       },
+    },
+    // `opengraph-image.tsx` lives in this same route segment (`[lang]/`), so
+    // without an explicit `openGraph.images` here Next merges in that file's
+    // own auto-resolved, content-hashed URL — which still carries the `/ka`
+    // prefix for Georgian — overriding whatever the layout's
+    // `generateMetadata` set. See `[lang]/layout.tsx` for the same pattern;
+    // keep both in sync.
+    openGraph: {
+      images: [
+        {
+          url: `${siteConfig.url}${localizedPath("/opengraph-image", locale)}`,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} — ${siteConfig.tagline.en}`,
+        },
+      ],
+    },
+    twitter: {
+      images: [`${siteConfig.url}${localizedPath("/opengraph-image", locale)}`],
     },
   }
 }

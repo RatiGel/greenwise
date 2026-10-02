@@ -65,8 +65,31 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: siteConfig.name,
       title,
       description,
+      // Explicit, so the card advertises the bare `/opengraph-image` path
+      // rather than the `/ka/opengraph-image?<hash>` URL Next would
+      // otherwise auto-resolve from the sibling `opengraph-image.tsx` file
+      // convention. That file lives in `[lang]/`, the same segment as THIS
+      // layout and as `[lang]/page.tsx` — but Next merges a segment's
+      // static-file metadata against that segment's own `generateMetadata`
+      // return, not the layout's. `[lang]/page.tsx` sets this same
+      // `openGraph.images`/`twitter.images` pair for that reason; every
+      // other page is a deeper segment with no sibling opengraph-image.tsx,
+      // so this layout-level value is the one that reaches them untouched.
+      images: [
+        {
+          url: `${siteConfig.url}${localizedPath("/opengraph-image", locale)}`,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} — ${siteConfig.tagline.en}`,
+        },
+      ],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${siteConfig.url}${localizedPath("/opengraph-image", locale)}`],
+    },
     robots: {
       index: true,
       follow: true,
