@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 
 import { siteConfig } from "@/config/site"
 import { getServices } from "@/content/services"
-import { localizedPath } from "@/lib/i18n/config"
+import { localizedPath, type Locale } from "@/lib/i18n/config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
@@ -20,24 +20,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ]
 
+  /**
+   * Absolute URL for a locale-free path.
+   *
+   * `localizedPath("/", "ka")` returns "/", which would concatenate into
+   * "https://greenwise.ge/" while the pages' own canonical and hreflang tags
+   * resolve to "https://greenwise.ge". Google treats the two as one URL, but
+   * emitting both spellings makes the sitemap disagree with the pages it
+   * lists, so the root's trailing slash is dropped here.
+   */
+  const absolute = (path: string, locale: Locale) => {
+    const localized = localizedPath(path, locale)
+    return `${siteConfig.url}${localized === "/" ? "" : localized}`
+  }
+
   return paths.flatMap(({ path, priority }) => {
     const alternates = {
       languages: {
-        ka: `${siteConfig.url}${localizedPath(path, "ka")}`,
-        en: `${siteConfig.url}${localizedPath(path, "en")}`,
+        ka: absolute(path, "ka"),
+        en: absolute(path, "en"),
       },
     }
 
     return [
       {
-        url: `${siteConfig.url}${localizedPath(path, "ka")}`,
+        url: absolute(path, "ka"),
         lastModified: now,
         changeFrequency: "monthly" as const,
         priority,
         alternates,
       },
       {
-        url: `${siteConfig.url}${localizedPath(path, "en")}`,
+        url: absolute(path, "en"),
         lastModified: now,
         changeFrequency: "monthly" as const,
         // English is secondary; keep it below the Georgian equivalent.
