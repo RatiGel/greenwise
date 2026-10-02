@@ -2,30 +2,48 @@ import type { MetadataRoute } from "next"
 
 import { siteConfig } from "@/config/site"
 import { getServices } from "@/content/services"
+import { localizedPath } from "@/lib/i18n/config"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
-  const staticRoutes = [
-    { path: "", priority: 1 },
+  const paths = [
+    { path: "/", priority: 1 },
     { path: "/services", priority: 0.9 },
     { path: "/about", priority: 0.8 },
     { path: "/methodology", priority: 0.7 },
     { path: "/clients", priority: 0.6 },
     { path: "/contact", priority: 0.8 },
-  ].map((route) => ({
-    url: `${siteConfig.url}${route.path}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: route.priority,
-  }))
+    ...getServices().map((service) => ({
+      path: `/services/${service.slug}`,
+      priority: 0.85,
+    })),
+  ]
 
-  const serviceRoutes = getServices().map((service) => ({
-    url: `${siteConfig.url}/services/${service.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.85,
-  }))
+  return paths.flatMap(({ path, priority }) => {
+    const alternates = {
+      languages: {
+        ka: `${siteConfig.url}${localizedPath(path, "ka")}`,
+        en: `${siteConfig.url}${localizedPath(path, "en")}`,
+      },
+    }
 
-  return [...staticRoutes, ...serviceRoutes]
+    return [
+      {
+        url: `${siteConfig.url}${localizedPath(path, "ka")}`,
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        priority,
+        alternates,
+      },
+      {
+        url: `${siteConfig.url}${localizedPath(path, "en")}`,
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        // English is secondary; keep it below the Georgian equivalent.
+        priority: Math.round((priority - 0.1) * 100) / 100,
+        alternates,
+      },
+    ]
+  })
 }

@@ -50,7 +50,14 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: [...dict.meta.keywords],
     authors: [{ name: siteConfig.name }],
     creator: siteConfig.name,
-    alternates: { canonical: localizedPath("/", locale) },
+    alternates: {
+      canonical: localizedPath("/", locale),
+      languages: {
+        ka: localizedPath("/", "ka"),
+        en: localizedPath("/", "en"),
+        "x-default": localizedPath("/", "ka"),
+      },
+    },
     openGraph: {
       type: "website",
       locale: siteConfig.ogLocale[locale],

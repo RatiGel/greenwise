@@ -38,7 +38,14 @@ export async function generateMetadata({
   return {
     title: service.title[locale],
     description: service.shortDescription[locale],
-    alternates: { canonical: path },
+    alternates: {
+      canonical: path,
+      languages: {
+        ka: localizedPath(`/services/${service.slug}`, "ka"),
+        en: localizedPath(`/services/${service.slug}`, "en"),
+        "x-default": localizedPath(`/services/${service.slug}`, "ka"),
+      },
+    },
     openGraph: {
       title: `${service.title[locale]} | ${siteConfig.name}`,
       description: service.shortDescription[locale],

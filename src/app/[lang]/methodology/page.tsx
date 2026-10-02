@@ -16,7 +16,14 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: dict.methodology.metaTitle,
     description: dict.methodology.metaDescription,
-    alternates: { canonical: localizedPath("/methodology", locale) },
+    alternates: {
+      canonical: localizedPath("/methodology", locale),
+      languages: {
+        ka: localizedPath("/methodology", "ka"),
+        en: localizedPath("/methodology", "en"),
+        "x-default": localizedPath("/methodology", "ka"),
+      },
+    },
   }
 }
 
