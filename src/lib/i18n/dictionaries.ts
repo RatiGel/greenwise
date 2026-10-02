@@ -10,8 +10,7 @@ import type { Dictionary } from "@/content/dictionaries/ka"
  * from a Client Component may import from here. Client-reachable code imports
  * `getDictionaryFor` from `@/lib/i18n/get-dictionary` instead.
  *
- * (The client directive is spelled out in prose rather than quoted, so that an
- * audit grep for that literal string does not flag this server-only module.)
+ * This module carries no client directive, and must never gain one.
  */
 
 /**
