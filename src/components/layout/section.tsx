@@ -10,12 +10,25 @@ import { Reveal } from "@/components/ui/reveal"
  */
 export function SectionLabel({
   children,
+  lead = false,
   className,
 }: {
   children: React.ReactNode
+  /** Larger size, for a label set directly above its headline. */
+  lead?: boolean
   className?: string
 }) {
-  return <p className={cn("label-stack", className)}>{children}</p>
+  return (
+    <p
+      className={cn(
+        "label-stack",
+        lead && "text-xl font-semibold sm:text-2xl",
+        className
+      )}
+    >
+      {children}
+    </p>
+  )
 }
 
 interface SectionHeadingProps {
@@ -25,6 +38,9 @@ interface SectionHeadingProps {
   accent?: string
   description?: string
   tone?: "dark" | "light"
+  /** Larger label set above the headline in one left column, instead of in
+      its own narrow column beside it. */
+  stacked?: boolean
   className?: string
   as?: "h1" | "h2"
 }
@@ -39,10 +55,58 @@ export function SectionHeading({
   accent,
   description,
   tone = "dark",
+  stacked = false,
   className,
   as: Tag = "h2",
 }: SectionHeadingProps) {
   const [before, after] = accent ? splitOnce(title, accent) : [title, ""]
+
+  const heading = (
+    <Tag
+      className={cn("heading-lg", tone === "dark" ? "text-white" : "text-on-light")}
+    >
+      {before}
+      {accent ? <span className="text-green-500">{accent}</span> : null}
+      {after}
+    </Tag>
+  )
+
+  const body = description ? (
+    <Reveal delay={140}>
+      <p
+        className={cn(
+          "text-[0.9375rem] leading-relaxed",
+          tone === "dark" ? "text-white/75" : "text-on-light-muted"
+        )}
+      >
+        {description}
+      </p>
+    </Reveal>
+  ) : null
+
+  if (stacked) {
+    return (
+      <div
+        className={cn(
+          "grid gap-6 lg:gap-10",
+          description && "lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-end",
+          className
+        )}
+      >
+        <div>
+          {eyebrow ? (
+            <Reveal>
+              <SectionLabel lead>{eyebrow}</SectionLabel>
+            </Reveal>
+          ) : null}
+          <Reveal delay={60}>
+            <div className={eyebrow ? "mt-4" : undefined}>{heading}</div>
+          </Reveal>
+        </div>
+        {body}
+      </div>
+    )
+  }
 
   return (
     <div
@@ -60,31 +124,9 @@ export function SectionHeading({
         <span aria-hidden />
       )}
 
-      <Reveal delay={60}>
-        <Tag
-          className={cn(
-            "heading-lg",
-            tone === "dark" ? "text-white" : "text-on-light"
-          )}
-        >
-          {before}
-          {accent ? <span className="text-green-500">{accent}</span> : null}
-          {after}
-        </Tag>
-      </Reveal>
+      <Reveal delay={60}>{heading}</Reveal>
 
-      {description ? (
-        <Reveal delay={140}>
-          <p
-            className={cn(
-              "text-[0.9375rem] leading-relaxed",
-              tone === "dark" ? "text-white/75" : "text-on-light-muted"
-            )}
-          >
-            {description}
-          </p>
-        </Reveal>
-      ) : null}
+      {body}
     </div>
   )
 }

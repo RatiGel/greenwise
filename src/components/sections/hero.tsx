@@ -1,6 +1,5 @@
 import { stats } from "@/content/about"
 import { siteConfig } from "@/config/site"
-import { localizedPath } from "@/lib/i18n/config"
 import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { CountUp } from "@/components/ui/count-up"
 import { Photo } from "@/components/ui/photo"
@@ -16,15 +15,20 @@ export async function Hero() {
   const locale = await getLocale()
   const dict = await getDictionary()
 
-  // The accent phrase is highlighted in place, so the title is split around
-  // it rather than stored as two separate strings.
-  const accentAt = dict.home.heroTitle.indexOf(dict.home.heroAccent)
-  const heroBefore =
-    accentAt === -1 ? dict.home.heroTitle : dict.home.heroTitle.slice(0, accentAt)
-  const heroAfter =
-    accentAt === -1
-      ? ""
-      : dict.home.heroTitle.slice(accentAt + dict.home.heroAccent.length)
+  // The title is stored with "\n" line breaks, one block per line. The accent
+  // phrase is highlighted in place, so each line is split around it rather
+  // than stored separately.
+  const heroLines = dict.home.heroTitle.split("\n").map((line) => {
+    const accentAt = line.indexOf(dict.home.heroAccent)
+    if (accentAt === -1) return line
+    return (
+      <>
+        {line.slice(0, accentAt)}
+        <span className="text-green-500">{dict.home.heroAccent}</span>
+        {line.slice(accentAt + dict.home.heroAccent.length)}
+      </>
+    )
+  })
 
   return (
     <section className="relative isolate overflow-hidden band-dark">
@@ -46,10 +50,12 @@ export async function Hero() {
       <div className="relative container-page flex min-h-[min(88svh,56rem)] flex-col justify-end pt-32 pb-16 lg:pb-20">
         <div className="max-w-4xl">
           <Reveal>
-            <h1 className="heading-xl text-white">
-              {heroBefore}
-              <span className="text-green-500">{dict.home.heroAccent}</span>
-              {heroAfter}
+            <h1 className="heading-xl text-white max-sm:text-[2.1rem]">
+              {heroLines.map((line, i) => (
+                <span key={i} className="block">
+                  {line}
+                </span>
+              ))}
             </h1>
           </Reveal>
 
@@ -61,11 +67,8 @@ export async function Hero() {
 
           <Reveal delay={200}>
             <div className="mt-10 flex flex-wrap gap-3">
-              <PillCta href={localizedPath("/contact", locale)}>
+              <PillCta href={buildWhatsAppQuickUrl(locale)} external>
                 {dict.cta.freeConsult}
-              </PillCta>
-              <PillCta href={buildWhatsAppQuickUrl(locale)} tone="onDark" external>
-                WhatsApp
               </PillCta>
             </div>
           </Reveal>

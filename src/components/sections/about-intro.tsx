@@ -21,7 +21,7 @@ export async function AboutIntro() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-16">
           <div>
             <Reveal>
-              <SectionLabel className="text-on-light-muted">
+              <SectionLabel lead>
                 {dict.home.aboutEyebrow}
               </SectionLabel>
               <h2 className="heading-lg mt-5 text-on-light">

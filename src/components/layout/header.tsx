@@ -86,7 +86,7 @@ export function Header() {
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-lg px-3 py-2 text-[15px] font-medium whitespace-nowrap transition-colors duration-200",
+                    "inline-flex items-center gap-1 rounded-lg px-3 py-2 text-[17px] font-medium whitespace-nowrap transition-colors duration-200",
                     isActive(item.href)
                       ? "bg-white/12 text-green-500"
                       : "text-white/80 hover:bg-white/8 hover:text-white"
@@ -96,7 +96,7 @@ export function Header() {
                   {item.children ? (
                     <ChevronDown
                       aria-hidden
-                      className="size-3.5 opacity-70 transition-transform group-hover:rotate-180"
+                      className="size-4 opacity-70 transition-transform group-hover:rotate-180"
                     />
                   ) : null}
                 </Link>
@@ -108,7 +108,7 @@ export function Header() {
                         <li key={child.href}>
                           <Link
                             href={child.href}
-                            className="block rounded-lg px-3 py-2.5 text-sm text-white/80 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+                            className="block rounded-lg px-3 py-2.5 text-base text-white/80 transition-colors duration-200 hover:bg-white/10 hover:text-white"
                           >
                             {child.label}
                           </Link>
@@ -129,7 +129,7 @@ export function Header() {
          * the sheet below, and on the footer and contact page.
          */}
         <div className="flex shrink-0 items-center gap-3">
-          <LanguageSwitcher className="hidden text-base sm:inline-flex" />
+          <LanguageSwitcher className="hidden text-lg sm:inline-flex" />
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>

@@ -8,11 +8,31 @@ import { Reveal } from "@/components/ui/reveal"
 import { SectionBackdrop } from "@/components/ui/section-backdrop"
 import { SectionHeading } from "@/components/layout/section"
 
-
 /**
- * Three cards where the last is filled bright green — the reference's way of
- * breaking an otherwise uniform row.
+ * Three cards whose fill steps from dark teal to bright green, so the row
+ * builds toward the last card.
  */
+
+const cardTones = [
+  {
+    card: "border border-white/12 bg-teal-700/60 text-white hover:bg-teal-700",
+    badge: "bg-green-500 text-teal-900",
+    body: "text-white/75",
+    link: "text-green-500",
+  },
+  {
+    card: "bg-green-600 text-white hover:bg-green-600/90",
+    badge: "bg-green-500 text-teal-900",
+    body: "text-white/85",
+    link: "text-white",
+  },
+  {
+    card: "bg-green-500 text-teal-900",
+    badge: "bg-teal-900 text-green-500",
+    body: "text-teal-900",
+    link: "text-teal-900",
+  },
+]
 export async function WhyChoose() {
   const locale = await getLocale()
   const dict = await getDictionary()
@@ -50,26 +70,25 @@ export async function WhyChoose() {
           title={dict.home.whyTitle}
           accent={dict.home.whyAccent}
           description={dict.home.whyDescription}
+          stacked
         />
 
         <ul className="mt-16 grid gap-5 md:grid-cols-3">
           {reasons.map((reason, index) => {
-            const filled = index === reasons.length - 1
+            const tone = cardTones[index % cardTones.length]
 
             return (
               <Reveal as="li" key={reason.title} delay={index * 90}>
                 <div
                   className={cn(
                     "group/card flex h-full flex-col rounded-[1.25rem] p-8 transition-[transform,background-color,box-shadow] duration-400 ease-out-quint hover:-translate-y-1 hover:shadow-xl hover:shadow-black/25",
-                    filled
-                      ? "bg-green-500 text-teal-900"
-                      : "border border-white/12 bg-teal-700/60 text-white hover:bg-teal-700"
+                    tone.card
                   )}
                 >
                   <span
                     className={cn(
                       "grid size-12 place-items-center rounded-full",
-                      filled ? "bg-teal-900 text-green-500" : "bg-green-500 text-teal-900"
+                      tone.badge
                     )}
                   >
                     <reason.icon aria-hidden className="size-6" />
@@ -82,7 +101,7 @@ export async function WhyChoose() {
                     <p
                       className={cn(
                         "mt-3 flex-1 leading-relaxed",
-                        filled ? "text-teal-900" : "text-white/75"
+                        tone.body
                       )}
                     >
                       {reason.description}
@@ -93,7 +112,7 @@ export async function WhyChoose() {
                     href={reason.href}
                     className={cn(
                       "group/link mt-7 inline-flex items-center gap-2 text-sm font-medium",
-                      filled ? "text-teal-900" : "text-green-500"
+                      tone.link
                     )}
                   >
                     {reason.linkLabel}

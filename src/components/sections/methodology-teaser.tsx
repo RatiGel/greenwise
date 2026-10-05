@@ -23,6 +23,7 @@ export async function MethodologyTeaser() {
             title={dict.home.methodologyTitle}
             accent={dict.home.methodologyAccent}
             tone="light"
+            stacked
             className="flex-1"
           />
           <Reveal delay={120}>

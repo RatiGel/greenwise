@@ -17,7 +17,7 @@ export async function ClientStrip() {
       <div className="container-page">
         <Reveal className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <SectionLabel>{dict.home.clientsEyebrow}</SectionLabel>
+            <SectionLabel lead>{dict.home.clientsEyebrow}</SectionLabel>
             <h2 className="mt-5 max-w-2xl text-2xl leading-snug font-semibold text-white sm:text-3xl">
               {dict.home.clientsTitle}
               <span className="text-green-500">{dict.home.clientsAccent}</span>
