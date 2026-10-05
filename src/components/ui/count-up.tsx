@@ -17,7 +17,7 @@ export function CountUp({
   duration = 1600,
   className,
 }: {
-  /** Full display string, e.g. "60 000+" or "13+". */
+  /** Full display string, e.g. "60 000+" (Georgian), "60,000+" (English) or "13+". */
   value: string
   duration?: number
   className?: string
@@ -31,14 +31,20 @@ export function CountUp({
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
-    // Split "60 000+" into the numeric core and whatever wraps it, so
-    // suffixes and non-breaking spaces survive the animation untouched.
-    const match = value.match(/^(\D*)([\d\s ]+)(.*)$/)
+    // Split "60 000+" (Georgian) or "60,000+" (English) into the
+    // numeric core and whatever wraps it, so suffixes, non-breaking
+    // spaces and comma group separators all survive the animation
+    // untouched.
+    const match = value.match(/^(\D*)([\d\s ,]+)(.*)$/)
     if (!match) return
 
     const [, prefix, rawNumber, suffix] = match
-    const groupSeparator = /[\s ]/.test(rawNumber) ? " " : ""
-    const target = Number(rawNumber.replace(/[\s ]/g, ""))
+    const groupSeparator = /,/.test(rawNumber)
+      ? ","
+      : /[\s ]/.test(rawNumber)
+        ? " "
+        : ""
+    const target = Number(rawNumber.replace(/[\s ,]/g, ""))
     if (!Number.isFinite(target) || target === 0) return
 
     const format = (n: number) =>

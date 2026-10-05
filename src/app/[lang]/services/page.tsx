@@ -4,6 +4,8 @@ import { ArrowRight, Check } from "lucide-react"
 
 import { cn } from "cn"
 import { getServices } from "@/content/services"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { ServiceIcon } from "@/components/service-icon"
 import { PageHeader } from "@/components/sections/page-header"
 import { CtaBand } from "@/components/sections/cta-band"
@@ -12,22 +14,35 @@ import { Reveal } from "@/components/ui/reveal"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
-export const metadata: Metadata = {
-  title: "სერვისები",
-  description:
-    "ბიომრავალფეროვნების შეფასება, ხე-მცენარეთა ინვენტარიზაცია და კადასტრი, დენდროლოგიური ექსპერტიზა და ტყის აღდგენა — GREENWISE-ის გარემოსდაცვითი მომსახურება.",
-  alternates: { canonical: "/services" },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const dict = await getDictionary()
+
+  return {
+    title: dict.services.metaTitle,
+    description: dict.services.metaDescription,
+    alternates: {
+      canonical: localizedPath("/services", locale),
+      languages: {
+        ka: localizedPath("/services", "ka"),
+        en: localizedPath("/services", "en"),
+        "x-default": localizedPath("/services", "ka"),
+      },
+    },
+  }
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
   const services = getServices()
+  const locale = await getLocale()
+  const dict = await getDictionary()
 
   return (
     <>
       <PageHeader
-        eyebrow="სერვისები"
-        title="გარემოსდაცვითი კვლევები და ექსპერტიზა"
-        description="ოთხი ძირითადი მიმართულება, რომელიც ფარავს პროექტის გარემოსდაცვით მოთხოვნებს დაგეგმვიდან ნებართვის შემდგომ მონიტორინგამდე."
+        eyebrow={dict.services.eyebrow}
+        title={dict.services.title}
+        description={dict.services.description}
       />
 
       <div className="section-y band-dark">
@@ -43,15 +58,15 @@ export default function ServicesPage() {
                   <ServiceIcon name={service.icon} className="size-6" />
                 </span>
                 <h2 className="heading-lg mt-6 text-white">
-                  {service.title}
+                  {service.title[locale]}
                 </h2>
                 <p className="prose-measure mt-5 text-[1.0625rem] text-white/75">
-                  {service.description}
+                  {service.description[locale]}
                 </p>
 
                 <Photo
                   src={`/photos/service-${service.slug}.jpg`}
-                  alt={service.title}
+                  alt={service.title[locale]}
                   ratio="16 / 10"
                   seed={index + 7}
                   sizes="(min-width: 1024px) 42vw, 100vw"
@@ -59,7 +74,7 @@ export default function ServicesPage() {
                 />
 
                 <ul className="mt-6 flex flex-wrap gap-2">
-                  {service.audience.map((item) => (
+                  {service.audience[locale].map((item) => (
                     <li key={item}>
                       <Badge variant="secondary">{item}</Badge>
                     </li>
@@ -67,8 +82,8 @@ export default function ServicesPage() {
                 </ul>
 
                 <Button asChild variant="outline" className="group mt-8 h-12 border-white/12 px-6 text-green-500 hover:bg-green-500/15 hover:text-white">
-                  <Link href={`/services/${service.slug}`}>
-                    დეტალური გვერდი
+                  <Link href={localizedPath(`/services/${service.slug}`, locale)}>
+                    {dict.cta.detailPage}
                     <ArrowRight
                       aria-hidden
                       className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
@@ -86,10 +101,10 @@ export default function ServicesPage() {
               >
                 <div className="rounded-2xl border border-white/12 bg-teal-700/50 p-7">
                   <h3 className="text-base font-semibold text-white">
-                    რას მოიცავს
+                    {dict.sections.whatItCovers}
                   </h3>
                   <ul className="mt-4 flex flex-col gap-3">
-                    {service.covers.map((item) => (
+                    {service.covers[locale].map((item) => (
                       <li key={item} className="flex gap-2.5 text-sm text-white/75">
                         <Check aria-hidden className="mt-0.5 size-4 shrink-0 text-green-500" />
                         {item}
@@ -100,10 +115,10 @@ export default function ServicesPage() {
 
                 <div className="rounded-2xl border border-green-500/30 bg-green-500/15 p-7">
                   <h3 className="text-base font-semibold text-white">
-                    რატომ გჭირდებათ
+                    {dict.sections.whyNeeded}
                   </h3>
                   <ul className="mt-4 flex flex-col gap-3">
-                    {service.whyNeeded.map((item) => (
+                    {service.whyNeeded[locale].map((item) => (
                       <li key={item} className="flex gap-2.5 text-sm text-green-500">
                         <Check aria-hidden className="mt-0.5 size-4 shrink-0 text-green-500" />
                         {item}

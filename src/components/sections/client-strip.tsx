@@ -1,11 +1,15 @@
 import { getClients } from "@/content/clients"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { PillCta } from "@/components/ui/pill-cta"
 import { Reveal } from "@/components/ui/reveal"
 import { SectionBackdrop } from "@/components/ui/section-backdrop"
 import { SectionLabel } from "@/components/layout/section"
 
-export function ClientStrip() {
+export async function ClientStrip() {
   const clients = getClients().slice(0, 12)
+  const locale = await getLocale()
+  const dict = await getDictionary()
 
   return (
     <section className="section-y band-dark relative isolate">
@@ -13,14 +17,18 @@ export function ClientStrip() {
       <div className="container-page">
         <Reveal className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <SectionLabel>კლიენტები</SectionLabel>
+            <SectionLabel>{dict.home.clientsEyebrow}</SectionLabel>
             <h2 className="mt-5 max-w-2xl text-2xl leading-snug font-semibold text-white sm:text-3xl">
-              გვენდობიან დეველოპერები, მუნიციპალიტეტები და{" "}
-              <span className="text-green-500">საერთაშორისო ორგანიზაციები</span>
+              {dict.home.clientsTitle}
+              <span className="text-green-500">{dict.home.clientsAccent}</span>
             </h2>
           </div>
-          <PillCta href="/clients" tone="onDark" className="shrink-0">
-            ყველა კლიენტი
+          <PillCta
+            href={localizedPath("/clients", locale)}
+            tone="onDark"
+            className="shrink-0"
+          >
+            {dict.cta.allClients}
           </PillCta>
         </Reveal>
 
@@ -31,7 +39,7 @@ export function ClientStrip() {
                 key={client.id}
                 className="flex min-h-[6rem] items-center justify-center bg-teal-900 px-5 py-6 text-center text-sm font-medium text-white/75 transition-[background-color,color,transform] duration-300 ease-out-quint hover:z-10 hover:scale-[1.03] hover:bg-teal-700 hover:text-white"
               >
-                {client.name}
+                {client.name[locale]}
               </li>
             ))}
           </ul>

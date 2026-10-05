@@ -3,15 +3,28 @@ import { Building2, Landmark, PenTool, Users } from "lucide-react"
 
 import { getClients, sectorLabels } from "@/content/clients"
 import type { ClientSector } from "@/types/content"
+import { localizedPath } from "@/lib/i18n/config"
+import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { PageHeader } from "@/components/sections/page-header"
 import { CtaBand } from "@/components/sections/cta-band"
 import { Reveal } from "@/components/ui/reveal"
 
-export const metadata: Metadata = {
-  title: "კლიენტები",
-  description:
-    "დეველოპერები, მუნიციპალიტეტები, არასამთავრობო ორგანიზაციები და არქიტექტურული ბიუროები, რომლებთანაც GREENWISE თანამშრომლობს.",
-  alternates: { canonical: "/clients" },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const dict = await getDictionary()
+
+  return {
+    title: dict.clients.metaTitle,
+    description: dict.clients.metaDescription,
+    alternates: {
+      canonical: localizedPath("/clients", locale),
+      languages: {
+        ka: localizedPath("/clients", "ka"),
+        en: localizedPath("/clients", "en"),
+        "x-default": localizedPath("/clients", "ka"),
+      },
+    },
+  }
 }
 
 const sectorIcons: Record<ClientSector, typeof Building2> = {
@@ -21,25 +34,24 @@ const sectorIcons: Record<ClientSector, typeof Building2> = {
   architects: PenTool,
 }
 
-const sectorNotes: Record<ClientSector, string> = {
-  developers:
-    "საცხოვრებელი და კომერციული პროექტების გარემოსდაცვითი დოკუმენტაცია და ხე-მცენარეთა კადასტრი.",
-  municipalities:
-    "საჯარო სივრცეების დენდროლოგიური აუდიტი, ინვენტარიზაცია და გამწვანების დაგეგმვა.",
-  ngos: "ბიომრავალფეროვნების კვლევები და აღდგენითი პროგრამების მონიტორინგი.",
-  architects:
-    "ადრეულ ეტაპზე ჩართვა, რათა პროექტი ღირებულ ნარგაობას მოერგოს.",
-}
-
-export default function ClientsPage() {
+export default async function ClientsPage() {
   const clients = getClients()
+  const locale = await getLocale()
+  const dict = await getDictionary()
+
+  const sectorNotes: Record<ClientSector, string> = {
+    developers: dict.clients.noteDevelopers,
+    municipalities: dict.clients.noteMunicipalities,
+    ngos: dict.clients.noteNgos,
+    architects: dict.clients.noteArchitects,
+  }
 
   return (
     <>
       <PageHeader
-        eyebrow="კლიენტები"
-        title="ვისთან ერთად ვმუშაობთ"
-        description="240-ზე მეტი დასრულებული პროექტი კერძო დეველოპერებთან, მუნიციპალიტეტებთან, დონორ ორგანიზაციებთან და არქიტექტურულ ბიუროებთან."
+        eyebrow={dict.clients.eyebrow}
+        title={dict.clients.title}
+        description={dict.clients.description}
       />
 
       <div className="section-y band-dark">
@@ -64,7 +76,7 @@ export default function ClientsPage() {
                         id={`sector-${sector.value}`}
                         className="text-2xl font-semibold text-white"
                       >
-                        {sector.label}
+                        {sector.label[locale]}
                       </h2>
                       <p className="prose-measure mt-2.5 text-white/75">
                         {sectorNotes[sector.value]}
@@ -84,7 +96,7 @@ export default function ClientsPage() {
                       {/* The name is its own element so it can lift without
                           touching Reveal's transform on the tile. */}
                       <span className="transition-transform duration-300 ease-out-quint motion-safe:group-hover/tile:-translate-y-0.5">
-                        {client.name}
+                        {client.name[locale]}
                       </span>
                     </Reveal>
                   ))}
@@ -94,16 +106,14 @@ export default function ClientsPage() {
           })}
 
           <Reveal className="rounded-2xl border border-white/12 bg-teal-700/50 p-6 text-sm leading-relaxed text-white/75">
-            ზოგიერთი პროექტი კონფიდენციალურობის შეთანხმებით არის დაფარული, ამიტომ
-            სიაში ყველა დამკვეთი არ არის წარმოდგენილი. მოთხოვნისას მოგაწვდით
-            შესაბამისი გამოცდილების რეფერენსებს.
+            {dict.clients.confidentialityNote}
           </Reveal>
         </div>
       </div>
 
       <CtaBand
-        title="გსურთ მსგავსი პროექტის განხილვა?"
-        description="მოგვწერეთ, რა ტიპის ობიექტზე მუშაობთ — გაგიზიარებთ შესაბამის გამოცდილებასა და სავარაუდო ვადებს."
+        title={dict.clients.ctaTitle}
+        description={dict.clients.ctaDescription}
       />
     </>
   )

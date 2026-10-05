@@ -6,9 +6,12 @@ import { usePathname } from "next/navigation"
 import { ChevronDown, Menu, Phone } from "lucide-react"
 
 import { cn } from "cn"
-import { mainNav } from "@/config/nav"
+import { getMainNav } from "@/config/nav"
 import { siteConfig } from "@/config/site"
+import { localizedPath } from "@/lib/i18n/config"
+import { useDictionary, useLocale } from "@/lib/i18n/locale-context"
 import { Logo } from "@/components/layout/logo"
+import { LanguageSwitcher } from "@/components/layout/language-switcher"
 import { Button } from "@/components/ui/button"
 import { PillCta } from "@/components/ui/pill-cta"
 import { ScrollProgress } from "@/components/ui/scroll-progress"
@@ -22,6 +25,11 @@ import {
 
 export function Header() {
   const pathname = usePathname()
+  const locale = useLocale()
+  const dict = useDictionary()
+  const mainNav = getMainNav(locale)
+  const home = localizedPath("/", locale)
+  const contactHref = localizedPath("/contact", locale)
   const [scrolled, setScrolled] = React.useState(false)
   const [open, setOpen] = React.useState(false)
 
@@ -49,7 +57,7 @@ export function Header() {
   }, [])
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href)
+    href === home ? pathname === home : pathname.startsWith(href)
 
   return (
     <header
@@ -62,10 +70,21 @@ export function Header() {
     >
       <ScrollProgress />
 
-      <div className="container-page flex h-20 items-center justify-between gap-6">
+      {/*
+       * The header row is allowed past `container-page`'s 1200px cap. Georgian
+       * nav labels are much longer than their English counterparts
+       * ("მეთოდოლოგია" vs "Methodology") and did not fit beside the language
+       * switcher and the CTA within 1200px. Page content keeps the narrower
+       * measure; only this row widens.
+       */}
+      <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between gap-6 px-5 sm:px-6 lg:px-8">
         <Logo showTagline={false} />
 
-        <nav aria-label="მთავარი ნავიგაცია" className="hidden min-w-0 xl:block">
+        {/*
+         * The inline nav appears at xl rather than lg: Georgian labels need the
+         * extra width, and below it the sheet carries the same navigation.
+         */}
+        <nav aria-label={dict.nav.mainNavLabel} className="hidden min-w-0 xl:block">
           <ul className="flex items-center gap-0.5">
             {mainNav.map((item) => (
               <li key={item.href} className="group relative">
@@ -109,19 +128,17 @@ export function Header() {
           </ul>
         </nav>
 
+        {/*
+         * The phone link used to sit here. Georgian nav labels plus the
+         * language switcher already fill the row at every width the container
+         * allows, and the number overlapped them. It remains one tap away in
+         * the sheet below, and on the footer and contact page.
+         */}
         <div className="flex shrink-0 items-center gap-2">
-          <a
-            href={`tel:${siteConfig.contact.phoneHref}`}
-            className="hidden shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap text-white/80 transition-colors hover:text-green-500 2xl:inline-flex"
-          >
-            <Phone aria-hidden className="size-4" />
-            <span dir="ltr" className="font-display font-semibold whitespace-nowrap">
-              {siteConfig.contact.phone}
-            </span>
-          </a>
+          <LanguageSwitcher className="hidden sm:flex" />
 
-          <PillCta href="/contact" className="hidden sm:inline-flex">
-            კონსულტაცია
+          <PillCta href={contactHref} className="hidden sm:inline-flex">
+            {dict.cta.consult}
           </PillCta>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -130,18 +147,18 @@ export function Header() {
                 variant="outline"
                 size="icon"
                 className="size-11 border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white xl:hidden"
-                aria-label="მენიუს გახსნა"
+                aria-label={dict.nav.openMenu}
               >
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="z-(--z-drawer) flex w-[88vw] max-w-sm flex-col border-white/12 bg-teal-900 p-0 text-white">
               <SheetHeader className="border-b border-white/12 px-5 py-4">
-                <SheetTitle className="text-start text-base">მენიუ</SheetTitle>
+                <SheetTitle className="text-start text-base">{dict.nav.menu}</SheetTitle>
               </SheetHeader>
 
               <nav
-                aria-label="მობილური ნავიგაცია"
+                aria-label={dict.nav.mobileNavLabel}
                 className="flex-1 overflow-y-auto px-3 py-4"
                 onClick={(event) => {
                   // Close the drawer as soon as a navigation link is activated.
@@ -182,8 +199,9 @@ export function Header() {
               </nav>
 
               <div className="border-t border-white/12 p-4">
-                <PillCta href="/contact" className="w-full justify-between">
-                  კონსულტაციის მოთხოვნა
+                <LanguageSwitcher className="mb-3 justify-center" />
+                <PillCta href={contactHref} className="w-full justify-between">
+                  {dict.cta.requestConsultation}
                 </PillCta>
                 <a
                   href={`tel:${siteConfig.contact.phoneHref}`}

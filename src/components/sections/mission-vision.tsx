@@ -1,3 +1,4 @@
+import { getDictionary } from "@/lib/i18n/dictionaries"
 import { Reveal } from "@/components/ui/reveal"
 import { SectionBackdrop } from "@/components/ui/section-backdrop"
 
@@ -5,20 +6,22 @@ import { SectionBackdrop } from "@/components/ui/section-backdrop"
  * Fixed two-part statement. The reference pairs a dark card with a bright
  * green one; numbering is earned because the pair is ordered, not decorative.
  */
-const statements = [
-  {
-    number: "01",
-    title: "ჩვენი მისია",
-    body: "მივაწოდოთ დამკვეთს გარემოსდაცვითი კვლევა, რომელიც ერთდროულად აკმაყოფილებს მარეგულირებლის მოთხოვნას და გამოსადეგია პროექტის დასაგეგმად — და არა მხოლოდ საქაღალდისთვის.",
-  },
-  {
-    number: "02",
-    title: "ჩვენი ხედვა",
-    body: "საქართველოში გარემოსდაცვითი დოკუმენტი გახდეს გადაწყვეტილების ინსტრუმენტი — მონაცემებზე დაფუძნებული, შემოწმებადი და იმდენად სანდო, რომ მასზე დაყრდნობით პროექტი შეიცვალოს.",
-  },
-]
+export async function MissionVision() {
+  const dict = await getDictionary()
 
-export function MissionVision() {
+  const statements = [
+    {
+      number: "01",
+      title: dict.home.missionNumberOneTitle,
+      body: dict.home.missionNumberOneBody,
+    },
+    {
+      number: "02",
+      title: dict.home.missionNumberTwoTitle,
+      body: dict.home.missionNumberTwoBody,
+    },
+  ]
+
   return (
     <section className="band-light relative isolate pb-20 md:pb-28">
       <SectionBackdrop src="/photos/backdrop-mission.jpg" seed={9} tone="light" />

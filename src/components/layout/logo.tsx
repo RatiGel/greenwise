@@ -1,6 +1,10 @@
+"use client"
+
 import Link from "next/link"
 import { cn } from "cn"
 import { siteConfig } from "@/config/site"
+import { localizedPath } from "@/lib/i18n/config"
+import { useDictionary, useLocale } from "@/lib/i18n/locale-context"
 
 /**
  * Brand symbol — the "symbol-on-dark" variant from /public/brand, minus its
@@ -22,6 +26,11 @@ export function LogoMark({ className }: { className?: string }) {
   )
 }
 
+/**
+ * Client Component, because `header.tsx` is one and renders it. A server
+ * Logo imported there would be pulled into the client bundle regardless of
+ * its own directive, so it reads the locale through the context hooks.
+ */
 export function Logo({
   className,
   showTagline = true,
@@ -29,10 +38,13 @@ export function Logo({
   className?: string
   showTagline?: boolean
 }) {
+  const locale = useLocale()
+  const dict = useDictionary()
+
   return (
     <Link
-      href="/"
-      aria-label={`${siteConfig.name} — მთავარი გვერდი`}
+      href={localizedPath("/", locale)}
+      aria-label={`${siteConfig.name} — ${dict.nav.homePageLabel}`}
       className={cn(
         "group inline-flex shrink-0 items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
         className
@@ -46,7 +58,7 @@ export function Logo({
         </span>
         {showTagline ? (
           <span className="mt-1.5 text-[11px] whitespace-nowrap text-white/60">
-            {siteConfig.tagline}
+            {siteConfig.tagline[locale]}
           </span>
         ) : null}
       </span>

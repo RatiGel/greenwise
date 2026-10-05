@@ -1,4 +1,6 @@
-import { services } from "@/content/services"
+import { getServices } from "@/content/services"
+import { localizedPath, type Locale } from "@/lib/i18n/config"
+import { getDictionaryFor } from "@/lib/i18n/get-dictionary"
 
 export interface NavItem {
   href: string
@@ -6,21 +8,24 @@ export interface NavItem {
   children?: NavItem[]
 }
 
-export const mainNav: NavItem[] = [
-  { href: "/", label: "მთავარი" },
-  { href: "/about", label: "ჩვენ შესახებ" },
-  {
-    href: "/services",
-    label: "სერვისები",
-    children: services
-      .filter((service) => service.published)
-      .sort((a, b) => a.order - b.order)
-      .map((service) => ({
-        href: `/services/${service.slug}`,
-        label: service.title,
+/** Builds the main navigation with hrefs and labels for `locale`. */
+export function getMainNav(locale: Locale): NavItem[] {
+  const t = getDictionaryFor(locale).nav
+  const path = (p: string) => localizedPath(p, locale)
+
+  return [
+    { href: path("/"), label: t.home },
+    { href: path("/about"), label: t.about },
+    {
+      href: path("/services"),
+      label: t.services,
+      children: getServices().map((service) => ({
+        href: path(`/services/${service.slug}`),
+        label: service.title[locale],
       })),
-  },
-  { href: "/clients", label: "კლიენტები" },
-  { href: "/methodology", label: "მეთოდოლოგია" },
-  { href: "/contact", label: "კონტაქტი" },
-]
+    },
+    { href: path("/clients"), label: t.clients },
+    { href: path("/methodology"), label: t.methodology },
+    { href: path("/contact"), label: t.contact },
+  ]
+}
