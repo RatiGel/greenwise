@@ -63,9 +63,9 @@ export function Header() {
       <ScrollProgress />
 
       <div className="container-page flex h-20 items-center justify-between gap-6">
-        <Logo />
+        <Logo showTagline={false} />
 
-        <nav aria-label="მთავარი ნავიგაცია" className="hidden min-w-0 lg:block">
+        <nav aria-label="მთავარი ნავიგაცია" className="hidden min-w-0 xl:block">
           <ul className="flex items-center gap-0.5">
             {mainNav.map((item) => (
               <li key={item.href} className="group relative">
@@ -73,7 +73,7 @@ export function Header() {
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200",
+                    "inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-200",
                     isActive(item.href)
                       ? "bg-white/12 text-green-500"
                       : "text-white/80 hover:bg-white/8 hover:text-white"
@@ -129,7 +129,7 @@ export function Header() {
               <Button
                 variant="outline"
                 size="icon"
-                className="size-11 border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white lg:hidden"
+                className="size-11 border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white xl:hidden"
                 aria-label="მენიუს გახსნა"
               >
                 <Menu className="size-5" />

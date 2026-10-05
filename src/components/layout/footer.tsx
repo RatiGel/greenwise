@@ -19,7 +19,7 @@ export function Footer() {
     <footer className="mt-auto border-t border-white/10 bg-teal-900 text-white">
       <div className="container-page grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <div className="lg:col-span-1">
-          <Logo inverted />
+          <Logo />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/65">
             გარემოსდაცვითი კვლევები და დოკუმენტაცია, რომლებსაც მარეგულირებელი
             პირველივე წარდგენისას იღებს.

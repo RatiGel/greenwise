@@ -16,20 +16,34 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#14301F",
+          background: "#14432a",
           padding: "72px",
         }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              fontSize: 30,
-              letterSpacing: 6,
-              color: "#8FBFA1",
-              display: "flex",
-            }}
-          >
-            GREENWISE
+          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+            <svg width="72" height="72" viewBox="0 0 64 64">
+              <circle cx="10" cy="10" r="3.5" fill="#5fd17f" />
+              <circle cx="32" cy="10" r="5.5" fill="#5fd17f" />
+              <circle cx="54" cy="10" r="8" fill="#5fd17f" />
+              <circle cx="10" cy="32" r="5.5" fill="#5fd17f" />
+              <circle cx="32" cy="32" r="8" fill="#5fd17f" />
+              <circle cx="54" cy="32" r="9.5" fill="#ffffff" />
+              <circle cx="10" cy="54" r="8" fill="#5fd17f" />
+              <circle cx="32" cy="54" r="9.5" fill="#ffffff" />
+              <rect x="44" y="44" width="20" height="20" fill="#e0a663" />
+            </svg>
+            <div
+              style={{
+                fontSize: 40,
+                fontWeight: 700,
+                letterSpacing: 6,
+                color: "#FFFFFF",
+                display: "flex",
+              }}
+            >
+              GREENWISE
+            </div>
           </div>
           <div
             style={{

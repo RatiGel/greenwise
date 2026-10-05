@@ -228,6 +228,12 @@
     font-feature-settings: "tnum" 1;
   }
 
+  /* Brand wordmark face — matches the GREENWISE logo artwork. Latin only. */
+  .font-wordmark {
+    font-family: var(--font-barlow-condensed), var(--font-manrope), system-ui,
+      sans-serif;
+  }
+
   /* Focus is never removed — only restyled. Green reads on both bands. */
   :focus-visible {
     outline: 2px solid var(--green-500);

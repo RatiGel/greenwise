@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Manrope, Noto_Sans_Georgian } from "next/font/google"
+import { Barlow_Condensed, Manrope, Noto_Sans_Georgian } from "next/font/google"
 
 import { siteConfig } from "@/config/site"
 import { Header } from "@/components/layout/header"
@@ -26,6 +26,15 @@ const manrope = Manrope({
   weight: ["600", "700", "800"],
   display: "swap",
   variable: "--font-manrope",
+  fallback: ["system-ui", "sans-serif"],
+})
+
+/** Wordmark face only — matches the GREENWISE logo artwork. */
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-barlow-condensed",
   fallback: ["system-ui", "sans-serif"],
 })
 
@@ -99,7 +108,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={siteConfig.lang} className={`${notoSansGeorgian.variable} ${manrope.variable} h-full`}>
+    <html lang={siteConfig.lang} className={`${notoSansGeorgian.variable} ${manrope.variable} ${barlowCondensed.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-teal-900">
         <a
           href="#main"
