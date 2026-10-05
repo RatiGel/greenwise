@@ -70,29 +70,23 @@ export function Header() {
     >
       <ScrollProgress />
 
-      {/*
-       * The header row is allowed past `container-page`'s 1200px cap. Georgian
-       * nav labels are much longer than their English counterparts
-       * ("მეთოდოლოგია" vs "Methodology") and did not fit beside the language
-       * switcher and the CTA within 1200px. Page content keeps the narrower
-       * measure; only this row widens.
-       */}
-      <div className="mx-auto flex h-20 w-full max-w-[1600px] items-center justify-between gap-6 px-5 sm:px-6 lg:px-8">
-        <Logo showTagline={false} />
+      {/* Same measure as page content, so the logo lines up with the hero text. */}
+      <div className="container-page flex h-24 items-center justify-between gap-6">
+        <Logo showTagline={false} size="lg" />
 
         {/*
          * The inline nav appears at xl rather than lg: Georgian labels need the
          * extra width, and below it the sheet carries the same navigation.
          */}
-        <nav aria-label={dict.nav.mainNavLabel} className="hidden min-w-0 xl:block">
-          <ul className="flex items-center gap-0.5">
+        <nav aria-label={dict.nav.mainNavLabel} className="ms-auto hidden min-w-0 xl:block">
+          <ul className="flex items-center gap-1">
             {mainNav.map((item) => (
               <li key={item.href} className="group relative">
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-200",
+                    "inline-flex items-center gap-1 rounded-lg px-3 py-2 text-[15px] font-medium whitespace-nowrap transition-colors duration-200",
                     isActive(item.href)
                       ? "bg-white/12 text-green-500"
                       : "text-white/80 hover:bg-white/8 hover:text-white"
@@ -102,7 +96,7 @@ export function Header() {
                   {item.children ? (
                     <ChevronDown
                       aria-hidden
-                      className="size-3.5 transition-transform group-hover:rotate-180"
+                      className="size-3.5 opacity-70 transition-transform group-hover:rotate-180"
                     />
                   ) : null}
                 </Link>
@@ -134,12 +128,8 @@ export function Header() {
          * allows, and the number overlapped them. It remains one tap away in
          * the sheet below, and on the footer and contact page.
          */}
-        <div className="flex shrink-0 items-center gap-2">
-          <LanguageSwitcher className="hidden sm:flex" />
-
-          <PillCta href={contactHref} className="hidden sm:inline-flex">
-            {dict.cta.consult}
-          </PillCta>
+        <div className="flex shrink-0 items-center gap-3">
+          <LanguageSwitcher className="hidden text-base sm:inline-flex" />
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -199,7 +189,7 @@ export function Header() {
               </nav>
 
               <div className="border-t border-white/12 p-4">
-                <LanguageSwitcher className="mb-3 justify-center" />
+                <LanguageSwitcher className="mx-auto mb-3 flex w-fit" />
                 <PillCta href={contactHref} className="w-full justify-between">
                   {dict.cta.requestConsultation}
                 </PillCta>

@@ -190,9 +190,11 @@ export function LogoMark({ className }: { className?: string }) {
 export function Logo({
   className,
   showTagline = true,
+  size = "md",
 }: {
   className?: string
   showTagline?: boolean
+  size?: "md" | "lg"
 }) {
   const locale = useLocale()
   const dict = useDictionary()
@@ -206,9 +208,14 @@ export function Logo({
         className
       )}
     >
-      <LogoMark className="size-10 shrink-0" />
+      <LogoMark className={cn("shrink-0", size === "lg" ? "size-12" : "size-10")} />
       <span className="flex flex-col leading-none">
-        <span className="font-wordmark text-[28px] leading-[0.85] tracking-[0.04em] text-white">
+        <span
+          className={cn(
+            "font-wordmark leading-[0.85] tracking-[0.04em] text-white",
+            size === "lg" ? "text-[34px]" : "text-[28px]"
+          )}
+        >
           <span className="font-bold">GREEN</span>
           <span className="font-normal">WISE</span>
         </span>

@@ -14,7 +14,6 @@ export function getMainNav(locale: Locale): NavItem[] {
   const path = (p: string) => localizedPath(p, locale)
 
   return [
-    { href: path("/"), label: t.home },
     { href: path("/about"), label: t.about },
     {
       href: path("/services"),
@@ -24,8 +23,6 @@ export function getMainNav(locale: Locale): NavItem[] {
         label: service.title[locale],
       })),
     },
-    { href: path("/clients"), label: t.clients },
-    { href: path("/methodology"), label: t.methodology },
     { href: path("/contact"), label: t.contact },
   ]
 }
