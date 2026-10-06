@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
 
 import { getServices } from "@/content/services"
 import { localizedPath } from "@/lib/i18n/config"
@@ -66,13 +65,6 @@ export async function ServiceCards() {
                   <p className="mt-3 text-sm leading-relaxed text-white/80">
                     {service.shortDescription[locale]}
                   </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-green-500">
-                    {dict.cta.viewDetails}
-                    <ArrowUpRight
-                      aria-hidden
-                      className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </span>
                 </div>
               </Link>
             </Reveal>

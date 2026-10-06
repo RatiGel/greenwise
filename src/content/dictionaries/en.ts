@@ -30,7 +30,6 @@ export const en: Dictionary = {
     requestQuote: "Request a quote",
     fullProcess: "Full process",
     detailPage: "Detail page",
-    viewDetails: "View details",
   },
   form: {
     name: "Name",
@@ -120,18 +119,18 @@ export const en: Dictionary = {
     reasonRegulatorTitle: "In the regulator's format",
     reasonRegulatorBody:
       "We prepare the document in the structure the authority expects — which is why the study passes on first submission.",
-    reasonRegulatorLink: "How we work",
     reasonDataTitle: "Verifiable field data",
     reasonDataBody:
       "Behind every finding stands a GPS coordinate, photographic record and GIS database, which you receive too.",
-    reasonDataLink: "Tree inventory",
     reasonPriceTitle: "Fixed timeline and price",
     reasonPriceBody:
       "Once the scope of work is agreed, the timeline and the cost no longer change.",
-    reasonPriceLink: "Get a proposal",
     aboutEyebrow: "About us",
     aboutCta: "About the company",
-    aboutExperienceHeading: "13 years of field experience",
+    aboutProcessFieldwork: "Field survey",
+    aboutProcessMeasure: "Dendrological measurement",
+    aboutProcessInventory: "Tree inventory",
+    aboutProcessRestore: "Forest restoration",
     aboutTeamPhotoAlt: "The GREENWISE team at work in the field",
     servicesTitle: "Four disciplines, one accountable team",
     servicesAccent: "one accountable team",
@@ -143,6 +142,8 @@ export const en: Dictionary = {
     clientsEyebrow: "Partners",
     clientsTitle: "Trusted by developers, municipalities and ",
     clientsAccent: "international organisations",
+    clientsPrev: "Previous partners",
+    clientsNext: "Next partners",
     missionNumberOneTitle: "Our mission",
     missionNumberOneBody:
       "To give the client an environmental study that both satisfies the regulator's requirements and is genuinely useful for planning the project — not merely something for the file.",

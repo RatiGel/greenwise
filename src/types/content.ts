@@ -85,7 +85,6 @@ export interface MethodologyStep {
   description: Localized<string>
   /** What the client receives at the end of this step. */
   deliverable: Localized<string>
-  duration: Localized<string>
   order: number
 }
 

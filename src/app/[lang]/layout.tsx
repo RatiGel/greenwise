@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Barlow_Condensed, Manrope, Noto_Sans_Georgian } from "next/font/google"
 
+import { bpgNinoMtavruli } from "@/fonts/bpg-nino"
 import { siteConfig } from "@/config/site"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
@@ -149,7 +150,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${notoSansGeorgian.variable} ${manrope.variable} ${barlowCondensed.variable} h-full`}
+      className={`${bpgNinoMtavruli.variable} ${notoSansGeorgian.variable} ${manrope.variable} ${barlowCondensed.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-teal-900">
         <LocaleProvider locale={locale} dictionary={dictionary}>

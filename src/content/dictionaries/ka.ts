@@ -32,7 +32,6 @@ export const ka = {
     requestQuote: "ფასის მოთხოვნა",
     fullProcess: "სრული პროცესი",
     detailPage: "დეტალური გვერდი",
-    viewDetails: "დეტალურად",
   },
   form: {
     name: "სახელი",
@@ -114,7 +113,7 @@ export const ka = {
     heroAccent: "ბიზნესზე ორიენტირებული",
     heroBody:
       "ბიომრავალფეროვნების შეფასება, დენდროლოგია, ხე-მცენარეთა აღრიცხვა და სხვა გარემოსდაცვითი სერვისები ერთ სივრცეში.",
-    whyEyebrow: "რატომ GREENWISE",
+    whyEyebrow: "რატომ ჩვენ",
     whyTitle: "კვლევა, რომელიც ნებართვას აჩქარებს",
     whyAccent: "ნებართვას აჩქარებს",
     whyDescription:
@@ -122,18 +121,18 @@ export const ka = {
     reasonRegulatorTitle: "მარეგულირებლის ფორმატში",
     reasonRegulatorBody:
       "დოკუმენტს ვამზადებთ იმ სტრუქტურით, რომელსაც უწყება ელოდება — ამიტომ კვლევა პირველივე წარდგენისას გადის.",
-    reasonRegulatorLink: "როგორ ვმუშაობთ",
     reasonDataTitle: "შემოწმებადი საველე მონაცემი",
     reasonDataBody:
       "თითოეული დასკვნის უკან დგას GPS-კოორდინატი, ფოტოფიქსაცია და GIS ბაზა, რომელსაც თქვენც იღებთ.",
-    reasonDataLink: "ინვენტარიზაცია",
     reasonPriceTitle: "ფიქსირებული ვადა და ფასი",
     reasonPriceBody:
       "სამუშაო ფარგლების შეთანხმების შემდეგ ვადა და ღირებულება აღარ იცვლება.",
-    reasonPriceLink: "შეთავაზების მიღება",
     aboutEyebrow: "ჩვენ შესახებ",
     aboutCta: "კომპანიის შესახებ",
-    aboutExperienceHeading: "13 წელი საველე გამოცდილება",
+    aboutProcessFieldwork: "საველე კვლევა",
+    aboutProcessMeasure: "დენდროლოგიური აზომვა",
+    aboutProcessInventory: "ხეების ინვენტარიზაცია",
+    aboutProcessRestore: "ტყის აღდგენა",
     aboutTeamPhotoAlt: "GREENWISE-ის გუნდი საველე სამუშაოზე",
     servicesTitle: "ოთხი მიმართულება, ერთი პასუხისმგებელი გუნდი",
     servicesAccent: "ერთი პასუხისმგებელი გუნდი",
@@ -145,6 +144,8 @@ export const ka = {
     clientsEyebrow: "პარტნიორები",
     clientsTitle: "გვენდობიან დეველოპერები, მუნიციპალიტეტები და ",
     clientsAccent: "საერთაშორისო ორგანიზაციები",
+    clientsPrev: "წინა პარტნიორები",
+    clientsNext: "შემდეგი პარტნიორები",
     missionNumberOneTitle: "ჩვენი მისია",
     missionNumberOneBody:
       "მივაწოდოთ დამკვეთს გარემოსდაცვითი კვლევა, რომელიც ერთდროულად აკმაყოფილებს მარეგულირებლის მოთხოვნას და გამოსადეგია პროექტის დასაგეგმად — და არა მხოლოდ საქაღალდისთვის.",

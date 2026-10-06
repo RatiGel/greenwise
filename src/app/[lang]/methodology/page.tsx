@@ -63,14 +63,9 @@ export default async function MethodologyPage() {
                   {/* Title and body shift together; the deliverable footer
                       below keeps its rule anchored to the card edge. */}
                   <div className="transition-transform duration-400 ease-out-quint motion-safe:group-hover/card:translate-x-1">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <h2 className="text-xl font-semibold text-white sm:text-2xl">
-                        {step.title[locale]}
-                      </h2>
-                      <span className="rounded-full bg-green-500/15 px-3 py-1 text-xs font-medium text-green-500">
-                        {step.duration[locale]}
-                      </span>
-                    </div>
+                    <h2 className="text-xl font-semibold text-white sm:text-2xl">
+                      {step.title[locale]}
+                    </h2>
 
                     <p className="prose-measure mt-4 text-white/75">
                       {step.description[locale]}

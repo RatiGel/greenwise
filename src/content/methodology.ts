@@ -16,10 +16,6 @@ export const methodologySteps: MethodologyStep[] = [
       ka: "სამუშაო ფარგლები და კომერციული შეთავაზება",
       en: "Scope of work and commercial proposal",
     },
-    duration: {
-      ka: "1—2 დღე",
-      en: "1—2 days",
-    },
     order: 1,
   },
   {
@@ -36,10 +32,6 @@ export const methodologySteps: MethodologyStep[] = [
     deliverable: {
       ka: "წინასწარი ანალიზი და საველე სამუშაოების გეგმა",
       en: "Preliminary analysis and field-work plan",
-    },
-    duration: {
-      ka: "3—5 დღე",
-      en: "3—5 days",
     },
     order: 2,
   },
@@ -58,10 +50,6 @@ export const methodologySteps: MethodologyStep[] = [
       ka: "საველე მონაცემთა ბაზა და ფოტოფიქსაცია",
       en: "Field database and photographic record",
     },
-    duration: {
-      ka: "1—3 კვირა",
-      en: "1—3 weeks",
-    },
     order: 3,
   },
   {
@@ -78,10 +66,6 @@ export const methodologySteps: MethodologyStep[] = [
     deliverable: {
       ka: "დამტკიცებისთვის მზა სრული დოკუმენტაცია",
       en: "Complete documentation ready for approval",
-    },
-    duration: {
-      ka: "1—2 კვირა",
-      en: "1—2 weeks",
     },
     order: 4,
   },

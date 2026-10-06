@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Manrope, Noto_Sans_Georgian } from "next/font/google"
 
+import { bpgNinoMtavruli } from "@/fonts/bpg-nino"
 import { getDictionaryFor } from "@/lib/i18n/get-dictionary"
 import { Button } from "@/components/ui/button"
 
@@ -39,7 +40,7 @@ export default function NotFound() {
   const dict = getDictionaryFor("ka")
 
   return (
-    <html lang="ka" className={`${notoSansGeorgian.variable} ${manrope.variable} h-full`}>
+    <html lang="ka" className={`${bpgNinoMtavruli.variable} ${notoSansGeorgian.variable} ${manrope.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-teal-900">
         <div className="container-page flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
           <p className="font-heading text-sm font-medium text-green-500">404</p>

@@ -4,9 +4,8 @@ import { siteConfig } from "@/config/site"
 import { localizedPath } from "@/lib/i18n/config"
 import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { Hero } from "@/components/sections/hero"
-import { WhyChoose } from "@/components/sections/why-choose"
 import { AboutIntro } from "@/components/sections/about-intro"
-import { MissionVision } from "@/components/sections/mission-vision"
+import { WhyChoose } from "@/components/sections/why-choose"
 import { ServiceCards } from "@/components/sections/service-cards"
 import { MethodologyTeaser } from "@/components/sections/methodology-teaser"
 import { ClientStrip } from "@/components/sections/client-strip"
@@ -52,11 +51,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function HomePage() {
   return (
     <>
-      {/* Bands alternate dark → light → dark, as in the reference. */}
+      {/* Who we are before why choose us. Bands alternate dark → light →
+          dark; WhyChoose and ServiceCards are both dark, but WhyChoose's photo
+          backdrop keeps the two visually distinct. */}
       <Hero />
-      <WhyChoose />
       <AboutIntro />
-      <MissionVision />
+      <WhyChoose />
       <ServiceCards />
       <MethodologyTeaser />
       <ClientStrip />

@@ -56,10 +56,6 @@ export async function MethodologyTeaser() {
                 {step.description[locale]}
               </p>
               <p className="mt-5 text-sm text-on-light-muted">
-                <span className="font-medium text-green-600">
-                  {step.duration[locale]}
-                </span>
-                {" · "}
                 {step.deliverable[locale]}
               </p>
             </Reveal>
