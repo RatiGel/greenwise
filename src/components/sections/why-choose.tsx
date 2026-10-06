@@ -49,8 +49,10 @@ export async function WhyChoose() {
     },
   ]
 
+  // Bottom padding is trimmed: ServiceCards follows on the same dark band, so
+  // a full section gap on both sides reads as an empty stripe.
   return (
-    <section className="section-y band-dark relative isolate">
+    <section className="band-dark relative isolate pt-20 pb-10 md:pt-28 md:pb-14">
       <SectionBackdrop src="/photos/backdrop-why.jpg" seed={7} />
       <div className="container-page">
         <SectionHeading

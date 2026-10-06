@@ -21,8 +21,10 @@ export async function ServiceCards() {
   const locale = await getLocale()
   const dict = await getDictionary()
 
+  // Top padding is trimmed to pair with WhyChoose's shortened bottom — the
+  // two share a dark band.
   return (
-    <section className="section-y band-dark">
+    <section className="band-dark pt-10 pb-20 md:pt-14 md:pb-28">
       <div className="container-page">
         <SectionHeading
           eyebrow={dict.sections.servicesHeading}
