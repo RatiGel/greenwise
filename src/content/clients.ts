@@ -1,23 +1,4 @@
-import type { Client, ClientSector, SectorLabel } from "@/types/content"
-
-export const sectorLabels: SectorLabel[] = [
-  {
-    value: "developers",
-    label: { ka: "დეველოპერები", en: "Developers" },
-  },
-  {
-    value: "municipalities",
-    label: { ka: "მუნიციპალიტეტები", en: "Municipalities" },
-  },
-  {
-    value: "ngos",
-    label: { ka: "არასამთავრობო ორგანიზაციები", en: "NGOs" },
-  },
-  {
-    value: "architects",
-    label: { ka: "არქიტექტურული ბიუროები", en: "Architecture firms" },
-  },
-]
+import type { Client } from "@/types/content"
 
 export const clients: Client[] = [
   {
@@ -126,8 +107,4 @@ export const clients: Client[] = [
 
 export function getClients(): Client[] {
   return [...clients].sort((a, b) => a.order - b.order)
-}
-
-export function getClientsBySector(sector: ClientSector): Client[] {
-  return getClients().filter((client) => client.sector === sector)
 }

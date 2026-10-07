@@ -52,8 +52,9 @@ export default async function MethodologyPage() {
               <Reveal
                 as="li"
                 key={step.id}
+                id={step.id}
                 delay={index * 100}
-                className="relative grid gap-5 md:grid-cols-[46px_1fr] md:gap-8"
+                className="relative grid scroll-mt-28 gap-5 md:grid-cols-[46px_1fr] md:gap-8"
               >
                 <span className="font-display z-10 grid size-11 place-items-center rounded-full border border-green-500/40 bg-teal-900 text-base font-bold text-green-500">
                   {String(step.step).padStart(2, "0")}

@@ -1,4 +1,3 @@
-import type { Certification, Milestone } from "@/types/content"
 
 export const mission = {
   heading: {
@@ -43,53 +42,6 @@ export const mission = {
   ],
 }
 
-export const milestones: Milestone[] = [
-  {
-    year: "2012",
-    title: {
-      ka: "დაარსება",
-      en: "Founded",
-    },
-    description: {
-      ka: "კომპანია დაფუძნდა ბიომრავალფეროვნებისა და სატყეო მიმართულების სპეციალისტების მიერ.",
-      en: "The company was founded by specialists in biodiversity and forestry.",
-    },
-  },
-  {
-    year: "2016",
-    title: {
-      ka: "კადასტრის მიმართულება",
-      en: "Cadastre practice launched",
-    },
-    description: {
-      ka: "დაინერგა GIS-ზე დაფუძნებული ხე-მცენარეთა ინვენტარიზაციის მეთოდოლოგია.",
-      en: "A GIS-based tree inventory methodology was introduced.",
-    },
-  },
-  {
-    year: "2019",
-    title: {
-      ka: "მუნიციპალური პროექტები",
-      en: "Municipal projects",
-    },
-    description: {
-      ka: "დაიწყო თანამშრომლობა მუნიციპალიტეტებთან საჯარო სივრცეების დენდროლოგიურ აუდიტზე.",
-      en: "Began working with municipalities on dendrological audits of public spaces.",
-    },
-  },
-  {
-    year: "2023",
-    title: {
-      ka: "აღდგენის პროგრამები",
-      en: "Restoration programmes",
-    },
-    description: {
-      ka: "განხორციელდა ტყის აღდგენის მრავალწლიანი მონიტორინგის პროექტები დონორ ორგანიზაციებთან.",
-      en: "Delivered multi-year forest restoration monitoring projects with donor organisations.",
-    },
-  },
-]
-
 export const stats = [
   {
     value: { ka: "13+", en: "13+" },
@@ -106,56 +58,5 @@ export const stats = [
   {
     value: { ka: "40+", en: "40+" },
     label: { ka: "მუდმივი დამკვეთი", en: "recurring clients" },
-  },
-]
-
-export const certifications: Certification[] = [
-  {
-    id: "cert-1",
-    title: {
-      ka: "გზშ-ს ექსპერტის სერტიფიკატი",
-      en: "EIA (Environmental Impact Assessment) Expert Certificate",
-    },
-    issuer: {
-      ka: "გარემოს დაცვისა და სოფლის მეურნეობის სამინისტრო",
-      en: "Ministry of Environmental Protection and Agriculture",
-    },
-    year: 2021,
-  },
-  {
-    id: "cert-2",
-    title: {
-      ka: "ISA Certified Arborist",
-      en: "ISA Certified Arborist",
-    },
-    issuer: {
-      ka: "International Society of Arboriculture",
-      en: "International Society of Arboriculture",
-    },
-    year: 2020,
-  },
-  {
-    id: "cert-3",
-    title: {
-      ka: "ISO 14001 — გარემოსდაცვითი მენეჯმენტი",
-      en: "ISO 14001 — Environmental Management",
-    },
-    issuer: {
-      ka: "სერტიფიცირების საერთაშორისო ორგანო",
-      en: "International certification body",
-    },
-    year: 2022,
-  },
-  {
-    id: "cert-4",
-    title: {
-      ka: "სატყეო აღრიცხვის მეთოდოლოგიის აკრედიტაცია",
-      en: "Accreditation in Forest Inventory Methodology",
-    },
-    issuer: {
-      ka: "ეროვნული სატყეო სააგენტო",
-      en: "National Forestry Agency",
-    },
-    year: 2019,
   },
 ]

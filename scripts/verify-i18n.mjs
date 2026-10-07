@@ -4,7 +4,7 @@
 const BASE = process.env.BASE ?? "http://localhost:3000"
 
 const KA_PATHS = [
-  "/", "/about", "/services", "/clients", "/methodology", "/contact",
+  "/", "/about", "/services", "/methodology", "/contact",
   "/services/biodiversity-assessment", "/services/tree-inventory",
   "/services/dendrology", "/services/forest-restoration",
   "/sitemap.xml", "/robots.txt",
@@ -48,7 +48,7 @@ for (const p of ["/ka", "/ka/services", "/ka/contact"]) {
 
 console.log("\nEnglish pages contain no Georgian text:")
 for (const p of ["/en", "/en/about", "/en/services", "/en/contact",
-                 "/en/methodology", "/en/clients",
+                 "/en/methodology",
                  "/en/services/tree-inventory"]) {
   const res = await fetch(`${BASE}${p}`)
   const html = await res.text()

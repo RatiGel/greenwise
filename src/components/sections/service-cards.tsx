@@ -29,7 +29,6 @@ export async function ServiceCards() {
         <SectionHeading
           eyebrow={dict.sections.servicesHeading}
           title={dict.home.servicesTitle}
-          accent={dict.home.servicesAccent}
           description={dict.home.servicesDescription}
           stacked
         />

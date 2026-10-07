@@ -14,7 +14,6 @@ export async function Footer() {
 
   const secondaryLinks = [
     { href: localizedPath("/about", locale), label: dict.nav.about },
-    { href: localizedPath("/clients", locale), label: dict.nav.clients },
     { href: localizedPath("/methodology", locale), label: dict.nav.methodology },
     { href: localizedPath("/contact", locale), label: dict.nav.contact },
   ]

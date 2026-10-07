@@ -478,3 +478,53 @@
     transition: none;
   }
 }
+
+/* Endless partner strip. The track holds the list twice and slides by
+   exactly one copy, so the loop seam is invisible. Each tile carries its own
+   trailing margin (not a flex gap) so both copies are the same width. */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@utility marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 60s) linear infinite;
+  will-change: transform;
+
+  .marquee:hover &,
+  .marquee:focus-within & {
+    animation-play-state: paused;
+  }
+}
+
+/* Reduced motion: no auto-play; the strip becomes a plain swipeable row and
+   the duplicate copy is dropped. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    mask-image: none;
+    scrollbar-width: none;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
+
+  .marquee-clone {
+    display: none;
+  }
+}

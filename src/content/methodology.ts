@@ -8,6 +8,10 @@ export const methodologySteps: MethodologyStep[] = [
       ka: "პირველადი კონსულტაცია",
       en: "Initial Consultation",
     },
+    summary: {
+      ka: "ვაზუსტებთ სამუშაო ფარგლებს და ფიქსირებულ ღირებულებას.",
+      en: "We agree the scope of work and a fixed price.",
+    },
     description: {
       ka: "ვეცნობით პროექტს, ტერიტორიასა და ვადებს. განვსაზღვრავთ, რომელი კვლევაა სავალდებულო თქვენი ნებართვისთვის და რომელი — არა. შედეგად იღებთ მკაფიო სამუშაო ფარგლებსა და ფიქსირებულ ღირებულებას.",
       en: "We get acquainted with the project, the site, and the timeline. We determine which studies are mandatory for your permit and which are not. The outcome is a clear scope of work and a fixed price.",
@@ -24,6 +28,10 @@ export const methodologySteps: MethodologyStep[] = [
     title: {
       ka: "ტერიტორიის შეფასება",
       en: "Site Assessment",
+    },
+    summary: {
+      ka: "ვსწავლობთ არსებულ მონაცემებს და ვგეგმავთ საველე სამუშაოს.",
+      en: "We review existing data and plan the field work.",
     },
     description: {
       ka: "ვამუშავებთ არსებულ მასალას — ტოპოგრაფიას, გენგეგმას, კადასტრულ მონაცემებს და სატელიტურ სურათებს. ვადგენთ საველე სამუშაოების გეგმას და წინასწარ ვლინდება შესაძლო შეზღუდვები.",
@@ -42,6 +50,10 @@ export const methodologySteps: MethodologyStep[] = [
       ka: "საველე სამუშაოები",
       en: "Field Work",
     },
+    summary: {
+      ka: "ადგილზე ვაღრიცხავთ ხეებს, ვიღებთ ნიმუშებს და ვაფიქსირებთ GPS-ით.",
+      en: "On site we record trees, take samples and fix positions by GPS.",
+    },
     description: {
       ka: "ჩვენი სპეციალისტები ადგილზე აწარმოებენ აღრიცხვას, ნიმუშების აღებასა და GPS ფიქსაციას. ხე-მცენარეები ინომრება, სახეობები იდენტიფიცირდება, მონაცემები პირდაპირ GIS ბაზაში შედის.",
       en: "Our specialists carry out on-site recording, sampling, and GPS fixing. Trees are numbered, species are identified, and the data is entered directly into the GIS database.",
@@ -58,6 +70,10 @@ export const methodologySteps: MethodologyStep[] = [
     title: {
       ka: "დოკუმენტაციის მომზადება",
       en: "Documentation",
+    },
+    summary: {
+      ka: "ვამზადებთ მარეგულირებლის ფორმატის, დამტკიცებისთვის მზა დოკუმენტაციას.",
+      en: "We deliver regulator-ready documentation, ready for approval.",
     },
     description: {
       ka: "მონაცემები გარდაიქმნება ოფიციალურ დოკუმენტად — უწყისად, გეგმად და დასკვნად, რომელიც აკმაყოფილებს მარეგულირებლის ფორმატს. საჭიროების შემთხვევაში წარმოგადგენთ უწყებასთან კომუნიკაციაშიც.",

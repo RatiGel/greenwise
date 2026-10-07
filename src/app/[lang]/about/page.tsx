@@ -1,15 +1,14 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import { Award, ShieldCheck } from "lucide-react"
+import { ShieldCheck } from "lucide-react"
 
-import { certifications, milestones, mission, stats } from "@/content/about"
+import { mission, stats } from "@/content/about"
 import { getTeam } from "@/content/team"
 import { localizedPath } from "@/lib/i18n/config"
 import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { PageHeader } from "@/components/sections/page-header"
 import { MissionVision } from "@/components/sections/mission-vision"
 import { CtaBand } from "@/components/sections/cta-band"
-import { SectionHeading, SectionLabel } from "@/components/layout/section"
 import { CountUp } from "@/components/ui/count-up"
 import { Photo } from "@/components/ui/photo"
 import { Reveal } from "@/components/ui/reveal"
@@ -48,8 +47,7 @@ export default async function AboutPage() {
       <section className="section-y-lg band-dark">
         <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal className="lg:sticky lg:top-28 lg:self-start">
-            <SectionLabel>{dict.about.missionLabel}</SectionLabel>
-            <h2 className="heading-lg mt-5 text-white">
+            <h2 className="heading-lg text-white">
               {mission.heading[locale]}
             </h2>
             <p className="prose-measure mt-5 text-[1.0625rem] text-white/75">
@@ -110,43 +108,14 @@ export default async function AboutPage() {
 
       <section className="section-y band-dark">
         <div className="container-page">
-          <SectionHeading
-            eyebrow={dict.about.historyEyebrow}
-            title={dict.about.historyTitle}
-            description={dict.about.historyDescription}
-          />
-
-          <ol className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {milestones.map((milestone, index) => (
-              <Reveal as="li" key={milestone.year} delay={index * 90}>
-                <div className="flex items-center gap-3">
-                  <span className="font-display text-2xl font-bold text-green-500">
-                    {milestone.year}
-                  </span>
-                  <span
-                    aria-hidden
-                    className="h-px flex-1 bg-gradient-to-r from-green-500/45 to-transparent"
-                  />
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-white">
-                  {milestone.title[locale]}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  {milestone.description[locale]}
-                </p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="section-y band-dark">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow={dict.about.teamEyebrow}
-            title={dict.about.teamTitle}
-            description={dict.about.teamDescription}
-          />
+          <Reveal>
+            <h2 className="heading-lg text-white">{dict.about.teamTitle}</h2>
+          </Reveal>
+          <Reveal delay={140}>
+            <p className="prose-measure mt-5 text-[0.9375rem] leading-relaxed text-white/75">
+              {dict.about.teamDescription}
+            </p>
+          </Reveal>
 
           <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {team.map((member, index) => (
@@ -194,43 +163,6 @@ export default async function AboutPage() {
                         ))}
                       </ul>
                     ) : null}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="section-y band-dark">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow={dict.about.certificationsEyebrow}
-            title={dict.about.certificationsTitle}
-            description={dict.about.certificationsDescription}
-          />
-
-          <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {certifications.map((certification, index) => (
-              <Reveal
-                as="li"
-                key={certification.id}
-                delay={index * 80}
-                className="flex"
-              >
-                {/* Lift on an inner element — Reveal owns this node's transform. */}
-                <div className="group/card flex h-full w-full flex-col rounded-2xl border border-white/12 bg-teal-700/50 p-6 transition-[transform,box-shadow] duration-400 ease-out-quint hover:-translate-y-1 hover:shadow-xl hover:shadow-black/25">
-                  <Award aria-hidden className="size-6 text-green-500" />
-                  <div className="flex flex-1 flex-col transition-transform duration-400 ease-out-quint motion-safe:group-hover/card:translate-x-1">
-                    <h3 className="mt-5 flex-1 text-base font-semibold text-white">
-                      {certification.title[locale]}
-                    </h3>
-                    <p className="mt-3 text-sm text-white/75">
-                      {certification.issuer[locale]}
-                    </p>
-                    <p className="font-display mt-1 text-sm font-bold text-green-500">
-                      {certification.year}
-                    </p>
                   </div>
                 </div>
               </Reveal>

@@ -6,7 +6,6 @@ export const en: Dictionary = {
     home: "Home",
     about: "About",
     services: "Services",
-    clients: "Partners",
     methodology: "Steps",
     contact: "Contact",
     mainNavLabel: "Main navigation",
@@ -21,7 +20,6 @@ export const en: Dictionary = {
     consult: "Get a consultation",
     freeConsult: "Contact us",
     allServices: "All services",
-    allClients: "All partners",
     learnMore: "Learn more",
     contactUs: "Contact us",
     writeWhatsApp: "Message us on WhatsApp",
@@ -108,12 +106,10 @@ export const en: Dictionary = {
   },
   home: {
     heroTitle: "Business-focused environmental services",
-    heroAccent: "Business-focused",
     heroBody:
       "Biodiversity assessment, dendrology, tree inventory and other environmental services, all in one place.",
     whyEyebrow: "Why GREENWISE",
     whyTitle: "Studies that speed up your permit",
-    whyAccent: "speed up your permit",
     whyDescription:
       "An environmental document stalls on two things: incomplete data and the wrong format. Preventing both is our job.",
     reasonRegulatorTitle: "In the regulator's format",
@@ -125,7 +121,6 @@ export const en: Dictionary = {
     reasonPriceTitle: "Fixed timeline and price",
     reasonPriceBody:
       "Once the scope of work is agreed, the timeline and the cost no longer change.",
-    aboutEyebrow: "About us",
     aboutCta: "About the company",
     aboutProcessFieldwork: "Field survey",
     aboutProcessMeasure: "Dendrological measurement",
@@ -133,17 +128,12 @@ export const en: Dictionary = {
     aboutProcessRestore: "Forest restoration",
     aboutTeamPhotoAlt: "The GREENWISE team at work in the field",
     servicesTitle: "Four disciplines, one accountable team",
-    servicesAccent: "one accountable team",
     servicesDescription:
       "Each service works on its own or as part of a wider package — depending on what your project's permit requires.",
     methodologyEyebrow: "Steps",
     methodologyTitle: "A transparent process — from the first call to the document",
-    methodologyAccent: "from the first call to the document",
     clientsEyebrow: "Partners",
-    clientsTitle: "Trusted by developers, municipalities and ",
-    clientsAccent: "international organisations",
-    clientsPrev: "Previous partners",
-    clientsNext: "Next partners",
+    clientsTitle: "Trusted by developers, municipalities and international organisations",
     missionNumberOneTitle: "Our mission",
     missionNumberOneBody:
       "To give the client an environmental study that both satisfies the regulator's requirements and is genuinely useful for planning the project — not merely something for the file.",
@@ -162,19 +152,9 @@ export const en: Dictionary = {
     title: "A team that translates environmental risk into numbers",
     description:
       "Since 2012 we have prepared studies that regulators accept and clients use to plan their projects.",
-    missionLabel: "Mission",
-    historyEyebrow: "Experience",
-    historyTitle: "How we grew",
-    historyDescription:
-      "The company's history in brief — from founding to multi-year restoration programmes.",
-    teamEyebrow: "Team",
     teamTitle: "The specialists who work on your project",
     teamDescription:
       "Every project has a responsible expert whom you deal with directly.",
-    certificationsEyebrow: "Licences and certifications",
-    certificationsTitle: "Official recognition",
-    certificationsDescription:
-      "Our findings rest on accredited methodology and certified expertise.",
     metaTitle: "About us",
     metaDescription:
       "GREENWISE — an environmental consulting company with 13+ years of experience. Meet our mission, team, track record and certifications.",
@@ -205,28 +185,6 @@ export const en: Dictionary = {
     metaTitle: "Steps",
     metaDescription:
       "The GREENWISE working process: initial consultation, site assessment, field work and documentation — with timelines and deliverables.",
-  },
-  clients: {
-    eyebrow: "Partners",
-    title: "Who we work with",
-    description:
-      "More than 240 completed projects with private developers, municipalities, donor organisations and architectural practices.",
-    noteDevelopers:
-      "Environmental documentation and tree cadastre for residential and commercial projects.",
-    noteMunicipalities:
-      "Dendrological audits, inventory and planting plans for public spaces.",
-    noteNgos:
-      "Biodiversity studies and monitoring of restoration programmes.",
-    noteArchitects:
-      "Early involvement, so the design can be fitted around valuable trees.",
-    confidentialityNote:
-      "Some projects are covered by confidentiality agreements, so not every client appears in this list. On request we will provide references for relevant experience.",
-    ctaTitle: "Would you like to discuss a similar project?",
-    ctaDescription:
-      "Tell us what kind of site you are working on — we will share relevant experience and likely timelines.",
-    metaTitle: "Partners",
-    metaDescription:
-      "Developers, municipalities, non-governmental organisations and architectural practices that GREENWISE works with.",
   },
   contact: {
     eyebrow: "Contact",

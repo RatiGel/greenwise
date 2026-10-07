@@ -58,7 +58,6 @@ export async function WhyChoose() {
         <SectionHeading
           eyebrow={dict.home.whyEyebrow}
           title={dict.home.whyTitle}
-          accent={dict.home.whyAccent}
           description={dict.home.whyDescription}
           stacked
         />

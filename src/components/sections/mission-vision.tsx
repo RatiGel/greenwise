@@ -23,7 +23,7 @@ export async function MissionVision() {
   ]
 
   return (
-    <section className="band-light relative isolate pb-20 md:pb-28">
+    <section className="band-light relative isolate py-20 md:py-28">
       <SectionBackdrop src="/photos/backdrop-mission.jpg" seed={9} tone="light" />
       <div className="container-page">
         <ul className="grid gap-5 md:grid-cols-2">

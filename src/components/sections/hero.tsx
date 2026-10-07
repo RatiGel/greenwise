@@ -15,20 +15,8 @@ export async function Hero() {
   const locale = await getLocale()
   const dict = await getDictionary()
 
-  // The title is stored with "\n" line breaks, one block per line. The accent
-  // phrase is highlighted in place, so each line is split around it rather
-  // than stored separately.
-  const heroLines = dict.home.heroTitle.split("\n").map((line) => {
-    const accentAt = line.indexOf(dict.home.heroAccent)
-    if (accentAt === -1) return line
-    return (
-      <>
-        {line.slice(0, accentAt)}
-        <span className="text-green-500">{dict.home.heroAccent}</span>
-        {line.slice(accentAt + dict.home.heroAccent.length)}
-      </>
-    )
-  })
+  // The title is stored with "\n" line breaks, one block per line.
+  const heroLines = dict.home.heroTitle.split("\n")
 
   return (
     <section className="relative isolate overflow-hidden band-dark">

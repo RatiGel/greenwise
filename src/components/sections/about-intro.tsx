@@ -5,7 +5,6 @@ import { getDictionary, getLocale } from "@/lib/i18n/dictionaries"
 import { Photo } from "@/components/ui/photo"
 import { PillCta } from "@/components/ui/pill-cta"
 import { Reveal } from "@/components/ui/reveal"
-import { SectionLabel } from "@/components/layout/section"
 
 /**
  * Four tiles on a 5×6 grid, sized 3×4, 2×2, 2×4 and 3×2. The horizontal seams
@@ -69,10 +68,7 @@ export async function AboutIntro() {
         <div className={cn("grid gap-12", columns)}>
           <div>
             <Reveal>
-              <SectionLabel lead>
-                {dict.home.aboutEyebrow}
-              </SectionLabel>
-              <h2 className="heading-lg mt-5 text-on-light">
+              <h2 className="heading-lg text-on-light">
                 {mission.heading[locale]}
               </h2>
               <p className="prose-measure mt-6 text-on-light-muted">

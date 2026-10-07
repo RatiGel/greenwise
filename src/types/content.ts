@@ -69,32 +69,14 @@ export interface Client {
   order: number
 }
 
-export interface Certification {
-  id: string
-  title: Localized<string>
-  issuer: Localized<string>
-  year: number
-  /** Optional PDF/scan under /public. */
-  file?: string
-}
-
 export interface MethodologyStep {
   id: string
   step: number
   title: Localized<string>
+  /** One-line version for the home page teaser. */
+  summary: Localized<string>
   description: Localized<string>
   /** What the client receives at the end of this step. */
   deliverable: Localized<string>
   order: number
-}
-
-export interface Milestone {
-  year: string
-  title: Localized<string>
-  description: Localized<string>
-}
-
-export interface SectorLabel {
-  value: ClientSector
-  label: Localized<string>
 }
