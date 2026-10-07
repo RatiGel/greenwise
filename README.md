@@ -3,13 +3,13 @@
 Website for an environmental consulting company specializing in biodiversity
 assessment, tree inventory and cadastre, dendrology, and forest restoration.
 
-Content language: **Georgian (ka)**.
+Bilingual: **Georgian (ka)** at bare paths (default), **English (en)** under `/en`.
 
 ## Stack
 
 - Next.js 16 (App Router) + TypeScript
 - Tailwind CSS v4 + shadcn/ui (radix base)
-- Noto Sans Georgian, self-hosted via `next/font`
+- BPG Nino Mtavruli (self-hosted) and Noto Sans Georgian via `next/font`
 - Contact form hands off to WhatsApp via a `wa.me` deep link (no backend)
 
 ## Getting started
@@ -30,6 +30,7 @@ Open http://localhost:3000.
 | `npm run build` | Production build |
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint |
+| `npm run verify:i18n` | Locale routing smoke test (needs a running server) |
 
 ## Environment variables
 
@@ -42,13 +43,16 @@ See `.env.example`. Both are public (`NEXT_PUBLIC_*`) — no secrets yet.
 
 ```
 src/
-  app/          routes (App Router), sitemap, robots, OG image
+  app/[lang]/   routes (App Router), one tree for both locales
+  app/          sitemap, robots, global styles
   components/
     layout/     header, footer, logo, section primitives
     sections/   page sections (hero, service cards, contact form, …)
     ui/         shadcn components + Reveal scroll animation
   config/       site metadata, navigation
-  content/      Georgian content as typed files
+  content/      localized content as typed files, plus UI dictionaries
+  lib/i18n/     locale config, dictionary loading
+  proxy.ts      bare-path → /ka rewrite, /ka/* → bare-path redirect
   lib/          WhatsApp link builder, utils
   types/        content contract shared with the future DB layer
 ```
@@ -66,10 +70,10 @@ The following are **placeholders and must be replaced before launch**:
 
 - `src/config/site.ts` — phone, email, address, WhatsApp number, map URL
 - `src/content/team.ts` and `public/team/*.svg` — names, bios, credentials, photos
-- `src/content/clients.ts` — client names
-- `src/content/about.ts` — certifications, milestones, statistics
+- `src/content/clients.ts` — partner names (shown in the home page partner strip)
+- `src/content/about.ts` — statistics
 
-Do not publish the invented certifications or client names as fact.
+Do not publish the invented client names or statistics as fact.
 
 ## Roadmap
 
